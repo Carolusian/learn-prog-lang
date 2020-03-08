@@ -4,6 +4,7 @@
 - Like `for`, `if` statement can start with a short statement to execute before condition
 - An interface contains a set of method signatures
 - A two-value assignment in Map tests the existence of a key
+- All basic types have `zero values`
 
 ## Pointers
 
@@ -11,7 +12,11 @@
 - `*ptr` has different meanings when been declared and been called
   - When declared, it indicates `ptr` is a pointer variable
   - When called, it indicates it is dereferences, so it returns the value rather than memory address
+  - If declared as `*`, then return it as `&`
 - In structs, `(*ptr).X` and `ptr.X` are the same, no explicit deferences is necessary
+- For methods, a `pointer receivers` is necessary to modify the instance
+- There is no pointer arithmetic, `ptr++` is not possible, so you can not change the address of the pointer unless you assign another one
+- `zero value` for pointer is `nil`
 
 ## Package management
 
