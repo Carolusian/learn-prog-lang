@@ -1,6 +1,7 @@
 # Golang study notes
 
 - `...` unpacks to positional arguments
+- `interface{}` is an empty interface to handle unknown type
 - Like `for`, `if` statement can start with a short statement to execute before condition
 - An interface contains a set of method signatures
 - A two-value assignment in Map tests the existence of a key
