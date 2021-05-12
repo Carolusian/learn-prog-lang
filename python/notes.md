@@ -67,6 +67,10 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - bytes can be decoded to code points
 - bytes (immutable) vs bytearray(mutable)
 - struct can format bytes in a memoryview
+- package: `chardet` - detect character encoding heuristically
+- BOM(byte-order mark): little-endian and big-endian, `\xff\xfe`
+- The unicode sandwich
+- local.getpreferedencoding
 
 ## Monkey patch
 
