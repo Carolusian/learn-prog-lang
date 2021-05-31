@@ -72,6 +72,34 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - The unicode sandwich
 - local.getpreferedencoding
 
+## Ch5: First-class functions
+
+- first-class function means: functions as first-class objects: assigned to variable/ element in data structure; pass as argument; return in the function
+- higher-order function: take function as argument or return function
+- callable objects: `__call__`
+
+## Ch6: Design pattern with first-class functions
+
+- Strategy pattern: order discount strategies: Order as context, Abstract and Contrete strategies
+- `abc` for abstract class and methods
+- If the instance does not maintenance state, then it would be safe to replace with plain function object
+- generator expression: `max(promo(order) for promo in promos)`
+- `globals()`: to get a list of promotions from current global symbol table.
+- you can use `inspect.getmembers` to do the same thing from a module
+- Command pattern: object-oriented replacement for callbacks
+- If generic sound name like `execute`, `run`, `doIt`. Then consider using first-class functions
+- Other books introducing patterns
+
+## Ch7: Function decorators and closures
+
+- metaprogramming - changing program behavior at runtime
+- decorator runs when the it is imported: import time
+- One use case of decorator is to add functions to some central registry: web frameworks routing, optimize strategy pattern
+- Codes that uses inner functions always depends on closures to operator correctly
+- `dis` module: easy way to disassemble the bytecode of python functions
+- Closures: average higher-order function example; free variables
+- `nonlocal` declaration
+
 ## Monkey patch
 
 - pipes: https://github.com/andybrice/pypework/blob/master/pypework/__init__.py

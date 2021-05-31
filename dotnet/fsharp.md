@@ -36,3 +36,9 @@
   - coding around partial functions: double check the examples
   - e.g. tryAverage, tryHead
 - common mistakes
+
+## Ch5: Immuntability
+
+- start off in mutable style, and refactor to immutable
+
+## Ch6: Pattern Matching
