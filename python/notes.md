@@ -98,7 +98,14 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - Codes that uses inner functions always depends on closures to operator correctly
 - `dis` module: easy way to disassemble the bytecode of python functions
 - Closures: average higher-order function example; free variables
-- `nonlocal` declaration
+- `nonlocal` declaration: flag a variable as `free variable`
+- Decorator: `functools.wraps` - handles keyword arguments and copy `__name__` and `__doc__`
+- `functools.lru_cache`: least recently used; must be invoked as regular function
+- `singledispatch`: can be used to do function or method overloading - singledispatch and then `decorator.register`
+- Parametrized decorators: a decorator factory takes those arguments and returns a decorator
+- A decorator can has 3 `def`: 1. decorator parameters; 2. the decorated function; 3. the parameters for decorated function
+- `**locals()`: allows any local variables to be passed as keyword arguments
+- decorators are best coded as classes implementing `__call__`
 
 ## Monkey patch
 
