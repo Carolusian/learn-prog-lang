@@ -107,6 +107,23 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - `**locals()`: allows any local variables to be passed as keyword arguments
 - decorators are best coded as classes implementing `__call__`
 
+## Ch8: Object references, mutability and recycling
+
+- Python object is a label rather than a box
+- The only mode of parameters passing in Python is `call by sharing`
+- `list()`: can create copy of objects
+- `==` vs `is` makes more sense than Java: equality vs aliases
+- Every python has an identity: a type and a value
+- augmented assignment with `+=`, `*=` creates new objects if left-hand variable is bound to an immutable object
+- Assigning a value doesn't change the object, it is just `rebinding` to a different object (label to a different object)
+- using mutable objects as default values for function parameters is dangerous
+- In python, the algorithm for garbage collection is reference counting
+- `__del__`: doesn't delete the real object, it just remove the label
+- `__del__`: give the instance a chance to release external resources before deleted
+- `weakref` is useful in implementing caching
+- `weak references`: `list` and `dict` instances may not be referents
+- `interning`: a technic for optimization by sharing literals or small integers
+
 ## Monkey patch
 
 - pipes: https://github.com/andybrice/pypework/blob/master/pypework/__init__.py
