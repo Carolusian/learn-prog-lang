@@ -1,4 +1,4 @@
-## Ch 1: Python Data Model
+## Ch01: Python Data Model
 
 - Dunder methods \_\_\*\_\_
   - Pros?
@@ -9,7 +9,7 @@
   - Object Model: Metaobject protocal - API for core language construct (extending a language to support new paradigms)
 - Simple class with collections.namedtuple
 
-## Ch 2: Data Structure - sequence
+## Ch02: Data Structure - sequence
 
 - Container / Sequence / MutableSequence
 - Forloop vs List comprehension
@@ -43,7 +43,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
   - `array` for `floats`
   - `deque` for FIFO and LIFO
 
-## Ch 3: Data Structure - dictionaries and sets (hashtables)
+## Ch03: Data Structure - dictionaries and sets (hashtables)
 
 - `__builtins__.__dict__`
 - `hashable`: value never change during its lifetime
@@ -60,7 +60,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
   - ordering depends on insertion
   - adding elements may change the order of other elements
 
-## Ch4: Text vs bytes
+## Ch04: Text vs bytes
 
 - literal: 字面常量 / code point: 码位 (the representation that can be understand by humans)
 - code point > encoded using, e.g., UTF8, UTF16 > different bytes (the representation of the data in computer) depends on the selected encoding
@@ -72,13 +72,13 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - The unicode sandwich
 - local.getpreferedencoding
 
-## Ch5: First-class functions
+## Ch05: First-class functions
 
 - first-class function means: functions as first-class objects: assigned to variable/ element in data structure; pass as argument; return in the function
 - higher-order function: take function as argument or return function
 - callable objects: `__call__`
 
-## Ch6: Design pattern with first-class functions
+## Ch06: Design pattern with first-class functions
 
 - Strategy pattern: order discount strategies: Order as context, Abstract and Contrete strategies
 - `abc` for abstract class and methods
@@ -90,7 +90,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - If generic sound name like `execute`, `run`, `doIt`. Then consider using first-class functions
 - Other books introducing patterns
 
-## Ch7: Function decorators and closures
+## Ch07: Function decorators and closures
 
 - metaprogramming - changing program behavior at runtime
 - decorator runs when the it is imported: import time
@@ -107,7 +107,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - `**locals()`: allows any local variables to be passed as keyword arguments
 - decorators are best coded as classes implementing `__call__`
 
-## Ch8: Object references, mutability and recycling
+## Ch08: Object references, mutability and recycling
 
 - Python object is a label rather than a box
 - The only mode of parameters passing in Python is `call by sharing`
@@ -123,6 +123,26 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - `weakref` is useful in implementing caching
 - `weak references`: `list` and `dict` instances may not be referents
 - `interning`: a technic for optimization by sharing literals or small integers
+
+## Ch09: A Pythonic object
+
+- `repr`, `str`, `format` must always return unicode strings, only `__bytes__` supposed to return a bytes sequence
+- `__iter__` makes a object iterable, and also makes `unpacking` work
+- `{!r}` in interpolating get `repr`
+- build tuples help comparison
+- `classmethod` vs `staticmethod`: see alternative constructor, static method is like a normal function
+- `__hash__`: normally implemented with `xor` of the hash of the components
+- used `property` and private `__` to make attributes readonly
+- private attribute names are mangled by prefixing the \_ and class name
+- `_` as protected attribute, it is by convention, nothing special
+- use `__slots__` class attribute to save memory space
+- `__slots__` have caveats, only use when absolutely need to save memory
+- using `type`, make the methods safer to be inherited
+- `__index__` to use a object as slice
+
+## Ch10: Sequence hacking, hashing and slicing
+
+- duck typing serves the purpose of protocal without inherit anything
 
 ## Monkey patch
 
