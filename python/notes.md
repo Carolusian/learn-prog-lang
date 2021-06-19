@@ -157,6 +157,29 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - `xxx-like` object, e.g. file-like object, can be a vivid explanation of `duck typing`
 - If you wnat the sum of list of items, you should write in a way that looks like "the sum of a list of items", not in a way that looks like "loop over these items, maintain another variable t, perform a sequence of additions"
 
+## Ch11: Interfaces: from protocol to ABCs
+
+- This chapters compares: `duck typing` and formal interfaces `Abstract Base Classes (ABC)`
+- `ABC`, like descriptors and metaclasses, is mainly for building frameworks
+- Informal protocols are only defined in documentation and convention, cannot be enforced
+- Monkey patching: `def set_card(deck, position, card)`, then `FrenchDeck.__setitem__ = set_card`
+- Monkey patching has a bad reputation, and may step on each other's toes 
+- `goose typing`: use `isinstance` to check if `cls` is an Abstract Base Class, metaclass
+- ABCs are meant to encapsulate very general concepts, abstractions, introduced by a framework
+- Concrete subclass can override methods inherited from ABC with more efficient implementations
+- Most ABCs are defined in `collections.abc` module and `numbers` module
+- The best way to declare an ABC is to subclass `abc.ABC`
+- `abstractmethod` can be combined with `classmethod` and `staticmethod`
+- `virtual subclass`: `ABC.register` even if it does not really inherit from the ABC
+- `__subclasshook__`
+- Inheritance is guided by `__mro__`: method resolution order
+- Geese can behave as ducks
+- `zope.interface`
+- `Go` is `static duck typing`
+- If type-checking is performed at compile time, the language is statically typed
+- A metaphor fosters understanding by making constraints clear
+- However, strict adherence to metaphors ties interfaces unnecessarily tightly to the workings of the physical world
+
 ## Monkey patch
 
 - pipes: https://github.com/andybrice/pypework/blob/master/pypework/__init__.py
