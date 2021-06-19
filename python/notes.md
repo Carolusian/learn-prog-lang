@@ -142,7 +142,20 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 
 ## Ch10: Sequence hacking, hashing and slicing
 
-- duck typing serves the purpose of protocal without inherit anything
+- This chapter is mainly about `duck typing`: duck typing serves the purpose of protocal without inherit anything
+- `duck typing` is actually providing informal protocol
+- `cosine similarity`: the cosine of the angle between a query vector and a document vector: As the angle decrease the cosine approaches the maximum value of 1.
+- `cosine similarity` is useful in information retrieval as documents can be represented as vectors
+- How to implement a FrenchDeck using and duck typing and OOP
+- How slicing works: need to determine whether the index parameter is a integer or a slice
+- A slice object has 3 data attributes: `start`, `stop` and `step`
+- `__getattr__` enables dynamic access to attributes, also need to create a customer `__setattr__` method for the purpose of consistency
+- `reduce`: useful in computing the hash of all vector components
+- Makes the `==` operator faster: `len(self) == len(other) and all(a == b for a, b in zip(self, other))`
+- `zip_longest`: works for vectors with different length with a `fillvalue` parameter
+- `__format__`: according to the trailing character of the format parameter to return different formatted string
+- `xxx-like` object, e.g. file-like object, can be a vivid explanation of `duck typing`
+- If you wnat the sum of list of items, you should write in a way that looks like "the sum of a list of items", not in a way that looks like "loop over these items, maintain another variable t, perform a sequence of additions"
 
 ## Monkey patch
 
