@@ -180,6 +180,22 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - A metaphor fosters understanding by making constraints clear
 - However, strict adherence to metaphors ties interfaces unnecessarily tightly to the workings of the physical world
 
+## Ch12: Inheritance: for good or for worse
+
+- Subclassing built-in types: you shall not overrides built-in methods, subscribe `UserDict`, `UserList` and `UserString` instead
+- Multiple inheritance and method resolution: read from right to left, tips: see `__mro__`
+- You can also call a method on a superclass directly, passing the instance as an explicit argument: `C.pong(self)`
+- Coping multiple inheritance:
+  - Distinguish `interface` and `implementation`: create sub-type (is-a relationship) vs. to facilitate code reuse
+  - If a class defines interface, it should be an explicit ABC
+  - Use mixins for code reuse
+  - Make mixins explicit by naming, e.g. `XViewMixin`
+  - An ABC may also be a mixin
+  - Don't subclass from more than one concrete class
+  - Provide aggregate classes to uses: e.g. Django `ListView`
+  - Favor object composition over class inheritance
+- Django class based generic views: View and TemplateResponseMixin
+
 ## Monkey patch
 
 - pipes: https://github.com/andybrice/pypework/blob/master/pypework/__init__.py
