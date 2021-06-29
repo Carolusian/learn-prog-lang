@@ -196,6 +196,32 @@ def grade(score, breakpoints=[], grades='FDCBA'):
   - Favor object composition over class inheritance
 - Django class based generic views: View and TemplateResponseMixin
 
+## Ch13: Operator overloading: doing it right
+
+- Java left out operator overloading because too many people abuse it
+- Good balance in python: cannot overload operators for built-in types; only able to overload existing operators
+- Cannot overload `is`, `and`, `or`, `not`
+- `x` and `+x` are not necessarily equal, e.g. different `decimal.getcontext` and counter
+- Operator overloading shall not change their operands
+- To support operations for different type, example:
+  - `__add__` ? -> `NotImplemented`
+  - `NotImplemented` -> `__radd__`? -> `NotImplemented`? -> `TypeError`
+- `__radd__` is reversed special methods
+- `__radd__` can be just delegated: ``return self + other`
+- In the spirit of duct typing, we can refrain from testing the type of the other operand
+- Augmented assignment: in-place operators overloading: `__ixxx__`
+- Augmented assgiment special methods must return `self`
+- `@` infix operation in python 3.5, for matrix multiplications
+- Rich comparison 
+- Overloaded operators, when used sensibly, do make code easier to read and write
+- In Python, you write this: `interest = principal * ((1 + rate) ** periods - 1)`
+- In Java, you write this: 
+
+```
+BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).subtract(BigDecimal.ONE));
+```
+
+
 ## Monkey patch
 
 - pipes: https://github.com/andybrice/pypework/blob/master/pypework/__init__.py
