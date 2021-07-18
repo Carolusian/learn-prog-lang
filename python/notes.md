@@ -163,7 +163,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - `ABC`, like descriptors and metaclasses, is mainly for building frameworks
 - Informal protocols are only defined in documentation and convention, cannot be enforced
 - Monkey patching: `def set_card(deck, position, card)`, then `FrenchDeck.__setitem__ = set_card`
-- Monkey patching has a bad reputation, and may step on each other's toes 
+- Monkey patching has a bad reputation, and may step on each other's toes
 - `goose typing`: use `isinstance` to check if `cls` is an Abstract Base Class, metaclass
 - ABCs are meant to encapsulate very general concepts, abstractions, introduced by a framework
 - Concrete subclass can override methods inherited from ABC with more efficient implementations
@@ -212,15 +212,47 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - Augmented assignment: in-place operators overloading: `__ixxx__`
 - Augmented assgiment special methods must return `self`
 - `@` infix operation in python 3.5, for matrix multiplications
-- Rich comparison 
+- Rich comparison
 - Overloaded operators, when used sensibly, do make code easier to read and write
 - In Python, you write this: `interest = principal * ((1 + rate) ** periods - 1)`
-- In Java, you write this: 
+- In Java, you write this:
 
 ```
 BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).subtract(BigDecimal.ONE));
 ```
 
+## Ch14: Iterables, iterators and generators
+
+- `yield` keyword allows the construction of generators. Generators (implement iterator interface) are iterators
+- generators can produce items "out of thin air", while iterators retrieve items from a collection
+- Iterators are used internally to support:
+  - for loops; looping over text files; list, dict and set comprehension;
+  - collection types construction and extensions;
+  - tuple unpacking; unpacking \* parameters.
+- `__iter__` makes an sequence `iterable`, if `__iter__` is not implemented, fallback to `__getitem__` to fetch item in order
+- `abc.Iterable` implements the `__subclasshook__`
+- `iter(x)` and TypeError is better than `isinstance(x, abc.Iterable)`
+- iterator vs iterable: Python obtains iterators from iterables
+- A concrete `iterator` must implement `__next__`, and implements iterable by returning `self`
+- `yield` must maintains state in the iterator object, more like a syntax sugar
+- iterable produce new iterator, whereas iterator produce itself
+- a generator function is a generator factory
+- generators are iterators that produce the values of the expressions passed to yield
+- when a generator function returns, the enclosing generator object raises `StopIteration`
+- lazy implementation: `re.finditer` instead of `re.findall`
+- generator expression: like list comprehension, factor of generators, e.g. generator expression in `__iter__`
+- if the generator expression spans more than a couple of line, then use generator function instead
+- generators in standard library: `itertools.compress`, `dropwhile`, `filter`, `filterfalse`, `islice`, `takewhile`
+- mapping generator functions: `accumulate`, `enumerate`, `map`, `starmap`
+- merge multiple input: `chan`, `chain.from_iterable`, `product`, `zip`, `zip_longest`
+- expand input item: `combinations`, `count`, `cycle`, `permutations`, `repeat`
+- rearranging: `groupby`, `reversed`, `tee`
+- `yield from`: replace the inner for loop, like yield from one of multiple inner iterables
+- return single values: `all`, `any`, `max`, `min`, `reduce`, `sum`.
+- generators as coroutines, basically two concepts, merely syntax sugar, the creator don't like additional keywords:
+  - generators produce data for iteration
+  - coroutines are consumers of data
+  - coroutines are not related to iteration
 
 ## Monkey patch
 
