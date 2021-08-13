@@ -1,3 +1,8 @@
+# Quick start
+
+- scripting: `dotnet fsi`
+- `dotnet new console --language "F#"` > `dotnet run`
+
 # Book: Stylish F
 
 ## Ch2: Designing Functions
