@@ -254,6 +254,25 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
   - coroutines are consumers of data
   - coroutines are not related to iteration
 
+## Ch15: Context managers and `else` blocks
+
+- `for/else` / `while/else`: only run when the loop runs to completion, not when aborted with a break.
+- `try/else`: will only run if no exception is raised in the try block. dangerous_call -> exception -> after_call()
+- EAFP: easier to ask for forgiveness than permission, the `try/except` style
+- LBYL: look before you leap, the many `if` statements style
+- `with` blocks/statement: designed to guarantee that some operations are performed after a block of code
+- Context manager protocol: `__enter__` and `__exit__` methods
+- `__exit__` method is always invoked on the context manager object. 
+- `as` clause in `with` statement is optional
+- `__enter__` and `__exit__` methods can be manually called.
+- `contextlib` utilities: closing, suppress, `@contextmanager`, `ContextDecorator`, `ExitStack`
+- `@contextmanager` decorator reduces the boilerplate of creating a context manager.
+- Use cases: 
+ - `LazyConnection`
+ - timing code
+ - making transactional changes to a `list` object, which makes a copy in the with block.
+ - Analogy of context manager as sandwich
+
 ## Monkey patch
 
 - pipes: https://github.com/andybrice/pypework/blob/master/pypework/__init__.py
