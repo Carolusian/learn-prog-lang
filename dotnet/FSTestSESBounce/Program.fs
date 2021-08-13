@@ -26,6 +26,7 @@ let sendEmail sender receiver =
 [<EntryPoint>]
 let main argv =
     let senderAddress = argv.[0]
+    // set receiverAddress to bounce@simulator.amazonses.com to test SES bounce back events
     let receiverAddress = argv.[1]
     sendEmail senderAddress receiverAddress 
         |> Async.RunSynchronously
