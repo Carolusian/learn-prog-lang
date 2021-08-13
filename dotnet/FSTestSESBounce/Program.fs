@@ -17,6 +17,7 @@ let sendEmail sender receiver =
         sendRequest.Message <- Message()
         sendRequest.Message.Subject <- Content(subject)
         sendRequest.Message.Body <- Body(text = Content(data = textBody))
+        // AWS credentials can be set in ~/.aws/credentials
         use client = new AmazonSimpleEmailServiceClient(RegionEndpoint.USWest2)
         let! result = client.SendEmailAsync(request = sendRequest) |> Async.AwaitTask
         printfn "%s" (result.HttpStatusCode.ToString())
