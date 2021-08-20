@@ -6,7 +6,8 @@
 - `dotnet new xunit`
 - `dotnet new classlib --framework "netstandard2.0" -o MyLibrary`
 - `dotnet --list-sdks`
-- `dotnet publish -r win-x64 -c Release /p:PublishSingleFile=true`
+- `dotnet publish -r win-x64 -c release /p:PublishSingleFile=true`
+- `dotnet publish -r osx-x64 -c release /p:PublishSingleFile=true`
 - `dotnet add <PROJECT> package <PACKAGE_NAME>`
 
 ## References

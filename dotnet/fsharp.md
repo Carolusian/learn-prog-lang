@@ -47,3 +47,7 @@
 - start off in mutable style, and refactor to immutable
 
 ## Ch6: Pattern Matching
+
+# References
+
+- paket: https://fsprojects.github.io/Paket/paket-and-dotnet-cli.html
