@@ -262,16 +262,46 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 - LBYL: look before you leap, the many `if` statements style
 - `with` blocks/statement: designed to guarantee that some operations are performed after a block of code
 - Context manager protocol: `__enter__` and `__exit__` methods
-- `__exit__` method is always invoked on the context manager object. 
+- `__exit__` method is always invoked on the context manager object.
 - `as` clause in `with` statement is optional
 - `__enter__` and `__exit__` methods can be manually called.
 - `contextlib` utilities: closing, suppress, `@contextmanager`, `ContextDecorator`, `ExitStack`
 - `@contextmanager` decorator reduces the boilerplate of creating a context manager.
-- Use cases: 
- - `LazyConnection`
- - timing code
- - making transactional changes to a `list` object, which makes a copy in the with block.
- - Analogy of context manager as sandwich
+- Use cases:
+- `LazyConnection`
+- timing code
+- making transactional changes to a `list` object, which makes a copy in the with block.
+- Analogy of context manager as sandwich
+
+## Ch16: Coroutines
+
+- A line `yield item` produces a value that is received by the caller of `next(..)`.
+- In a coroutine, `yield` usually appears on the right side of an expression.
+- `yield` is a control flow in coroutines
+- coroutine: a procedure that collaborate with caller, yielding and receiving values from the caller
+- `throw` and `close`, allow the caller to throw an exception inside a generator and to terminate it
+- A generator now can also return a value: as an attribute of the `StopIteration` exception
+- If a coroutine is designed to just receive value from the caller, the it `yield` nothing in the exception
+- Use `inspect.getgeneratorstate(..)` to get 4 states of a coroutine: `GEN_CREATED`, `GEN_RUNNING`, `GEN_SUSPENDED`, `GEN_CLOSED`
+- `priming`: the inital call `next(coro)`
+- It is crucial to understand that the execution of the coroutine is suspended exactly at the **`yield`** keyword, see figure 16-1
+- Example: coroutine to compute a running average using `while True:` the coroutine will only terminate when the caller calls `.close()` on it.
+- `@coroutine` help priming the coroutine by default
+- An unhandled exception within a coroutine propagates to the caller
+- `yield from`: throwing exceptions into nest coroutines and return values more conveniently
+  - recipe 4.14 - "Flattening a Nested Sequence"
+  - bidirectional channel from the outermost caller to the innermost subgenerator
+  - three parts: delegating generator, subgenerator, caller, see figure 16.2
+- the meaning of `yield from`: subgenerator can return the value, which become the value of `yield from` expression
+  - 6 points of PEP 380: for further reading
+  - pseudocode in example 16-19
+- use case: coroutine for discrete event simulation
+  - turn-based games are example of discrete event simulation
+  - the taxi fleet simulation: figure 16-3: different of types of yield event in the same generator to simulate a single trip
+  - see: taxi_sim.py
+- three styles to write generators: pull (iterators), push (average), tasks (Dave Beazley's)
+- popular recipes tagged coroutine in ActiveState Code recpies database
+- Effective Python: consider coroutines to Run many functions concurrently
 
 ## Monkey patch
 
