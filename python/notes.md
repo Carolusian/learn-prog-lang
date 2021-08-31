@@ -303,6 +303,40 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 - popular recipes tagged coroutine in ActiveState Code recpies database
 - Effective Python: consider coroutines to Run many functions concurrently
 
+## Ch17: Concurrency with futures
+
+- review the patterns in download flag examples
+- 99% use case: the simple pattern of spawning a bunch of independent threads and collect the result in a queue
+- Instead of wasting CPU cycles in I/O bound applications, it is better to do something else using concurrency
+- threads or asyncio: can vastly improve `throughput` in I/O bound applications
+- in `ThreadPoolExecutor` context manager, `executor.__exit__` method will call `shutdown(wait=True)` which will block until threads are done
+- `common refactoring` pattern: turning the body of a sequential for loop into a function to be called concurrently
+- futures shall not be created manually, they are meant to be instantiated exclusively by the concurrency framework
+- Future classes have an `.add_done_callback()` method, where a callable will be invoked once the future is done.
+- `.result()` method: returns result of callable, or re-raise exception that might have been thrown
+- `concurrent.futures.as_completed()`: takes iterable of futures
+- GIL is nearly harmless with I/O bound processing:
+  - GIL allows only one thread at a time to execute
+  - That's why a single Python process usually cannot use multiple CPU cores at the same time
+  - However, all I/O in standard library releases GIL, so another thread can run.
+- `ProcessPoolExecutor` bypassing GIL and leveraging all CPU cores, it is good for CPU-bound processing
+- `Executor.map`: returns results exactly in the same order as the calls are started: may or may not be as desired.
+- `futures.as_completed` is more flexible than `Executor.map`
+- `TQDM`: animated text mode progress bar. It need an iterable that has a len, or receive as a second argument the expected number of items
+- re-`raise` in `except` block
+- `executor.submit`: the first argument is the callable, the second rest are the arguments it will receive
+- useful idiom in `futures.as_completed`, build a dict to map each future to other data that may be useful
+- If `futures.ThreadPoolExecutor` is not flexible enough, you can build your own solution using the threading components: `Thread`, `Lock`, `Semaphore`
+- the `multiprocessing` package emulates the threading API, but delegates jobs to mutiple processes
+- every standard library I/O function written in C releases the GIL.
+- <<Parallel Programming with Python>>
+- <<Python Cookbook 3.0>> chapter 12
+- <<Seven Concurrency Models in Seven Weeks>>
+- `lelo` and `parallelize`: libraries for parallelizing tasks easily
+- You probably don't want to manage threads and locks yourself, best carried-out by system programmes who have know-how
+- GIL simpifies the implementation of the CPython interpreter and of extension written in C, so that we have vast number of extensions
+- JavaScript interpreters don't support user-level threads at all.
+
 ## Monkey patch
 
 - pipes: https://github.com/andybrice/pypework/blob/master/pypework/__init__.py
