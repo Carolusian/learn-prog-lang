@@ -24,3 +24,5 @@
 - [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
 - [Scala Developer Journey into Rust](http://blog.madhukaraphatak.com/rust-scala-part-1/)
 - [Rust VIM + REPL](https://startupsventurecapital.com/rust-ide-repl-in-vim-11daa921a2c4)
+- [Rust by Example](https://doc.rust-lang.org/rust-by-example/index.html)
+

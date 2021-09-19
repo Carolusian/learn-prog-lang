@@ -348,3 +348,4 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 ## Python type hinting
 
 - How to user python type hinting: https://www.youtube.com/watch?v=yScuF1UgGU0
+- [Missing type hints for third party library](https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports)
