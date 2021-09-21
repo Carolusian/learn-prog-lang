@@ -77,6 +77,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - first-class function means: functions as first-class objects: assigned to variable/ element in data structure; pass as argument; return in the function
 - higher-order function: take function as argument or return function
 - callable objects: `__call__`
+- to specify keyword only argument with `*`: `def f(a, \*, b)`
 
 ## Ch06: Design pattern with first-class functions
 
@@ -336,6 +337,66 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 - You probably don't want to manage threads and locks yourself, best carried-out by system programmes who have know-how
 - GIL simpifies the implementation of the CPython interpreter and of extension written in C, so that we have vast number of extensions
 - JavaScript interpreters don't support user-level threads at all.
+
+## Ch18: Concurrency with asyncio
+
+- Concurrency is about dealing with a lots of things at once; Parallelism is about doing lots of things at once; (Rob Pike, co-inventor of Golang)
+- trick for text mode animation: move the cursor back with backspace `\x08`: write('\x08' + len(status))
+- There is no API for terminating a thread in Python, can use `signal` pattern, to check whether to break in thread body
+- an asyncio coroutine should be driven by a caller invoking it through `yield from` or by passing the coroutine to one of the asyncio functions
+- `asyncio.sleep(.1)` to sleep without breaking the event loop
+- `asyncio.async(...)` wrapping the coroutine to a `Task` object, and returned immediately
+- A `Task` object can be cancelled, e.g. `spinner.cancel()`, it raises `CancelledError`
+- Task vs Thread:
+  - an `asyncio.Task` is roughly equivalent of a `threading.Thread`
+  - a `Task` is like a green thread in libraries, e.g. gevent
+  - how to create task object: `asyncio.async(...)` or `loop.create_task(...)`
+  - task runs by default, thread instance must be explicitly triggered with `start` method
+- `asyncio.Future`: future are only the result of scheduling something
+  - `BaseEventLoop.create_task`: takes coroutine, run, return `Task` instance
+  - `Task` is a subclass of Future designed to wrap a coroutine
+  - 3 methods: `.done()`, `.add_done_callback(..)`, and `.result()`
+  - call `.result()` if it is not done, it will raise `asyncio.InvalidStateError`
+  - the above 3 method is often not used because we normally use `await` (the old `yield from`)
+- coroutines and futures are interchangeable in many parts of `asyncio`
+- `asyncio.async(coro_or_future, *, loop=None)`: unify coroutines and futures
+- `asyncio.create_task(coro)`: run, return Task object
+- downloading with `asyncio` and `aiohttp`: download flags concurrently
+- `asyncio.wait(todo_list)`: this is not blocking despite the name
+- `run_until_complete(wait_coro)`: blocks, return 2-tuple - completed futures and incompleted futures
+- using the `yield from foo` syntax avoids blocking:
+  - because the current coroutine is suspended, and control flow goes back to event loop
+  - once the coroutine is done, it returns the result and the coroutine resumes
+  - every arrangement of coroutines with `yield from` is ultimately driven by a non-coroutine
+  - the innermost subgenerator must be just `yield` or iterable objects (or libraries does the async IO)
+- summary of asyncio specifics when using `asyncio`:
+  - composition:
+    - coroutines that are delegating generators;
+    - and, coroutines that ultimately delegate to asyncio library or 3rd party libraries, e.g. aiohttp
+  - the arrangement create pipelines drive (through corotines) the library functions that perform the low-level I/O
+  - the low-level I/O is asynchronous
+- modern computer latency: L1/L2 cache vs disk and network = 3 seconds vs 2-8 years, see Table 18-1 (0.3 billion L1 reads vs 4 network reads)
+- `loop.run_in_executor`: to utilize threadpool with asyncio
+- `asyncio.Semaphore(concur_req)`: holds an internal counter and is decreased when `.acquire()` is called
+  - `flags2_asyncio.py`: worth study
+- callback hell: the nesting of callbacks with one operation depends on the result of the previous operation.
+  - another problem: local context will is lost in the callbacks
+  - this can be fixed using asyncio as all operations in the same function body
+  - it also provides context for error reporting through exceptions
+- writing `asyncio` servers
+  - pickle: object serialization
+  - `StreamWriter.write` is a function, because it writes buffer and is fast
+  - `StreamWriter.drain` is a coroutine, and not blocking, performs actuall I/O
+  - `asyncio.start_server(handle_queries, ...)`: return an instance of asyncio.Server
+  - low-level `Transports` and `Protocols` API
+- An aiohttp server: similar to above, but just use web.Application to add route and handlers
+- aiohttp `add_route` will convert a regular function to coroutine inernally
+- in practices, asynchronous libraries depends on lower level threads to work - down to kernel level threads
+- `asyncio.wait` vs `asyncio.as_completed`
+- Both python and nodejs have no transparent way to leverage all available CPU cores
+- One Loop: one loop to rule them all, one loop to find them; one loop to bring them all and in liveness bind them
+
+## Ch19: Dynamic attributes and properties
 
 ## Monkey patch
 
