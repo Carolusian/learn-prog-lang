@@ -1,6 +1,21 @@
 # Rust Notes
 
+## Key concepts
+
+### Ownership
+
+### Option & unwrap
+
+- learn by comparing with Scala & F#:
+  - [Module std::option](https://doc.rust-lang.org/std/option/): docs is good
+  - [Scala Option](https://www.scala-lang.org/api/current/scala/Option.html): used as a collection or monad
+  - [F# Option](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/options): used as a collection
+  - `unwrap_or` is like `getOrElse` in scala
+  - `unwrap` is like `unwrap`, but can panic, so it is not encouraged
+
 ## Book: The Rust Programming Language
+
+NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts about ownership, borrowing and lifetime
 
 ### Ch1: Installation
 
@@ -27,3 +42,5 @@
 - [Scala Developer Journey into Rust](http://blog.madhukaraphatak.com/rust-scala-part-1/)
 - [Rust VIM + REPL](https://startupsventurecapital.com/rust-ide-repl-in-vim-11daa921a2c4)
 - [Rust by Example](https://doc.rust-lang.org/rust-by-example/index.html)
+- [Extending Python with Rust](https://developers.redhat.com/blog/2017/11/16/speed-python-using-rust#what_is_rust_)
+  - See also PyO3: https://github.com/PyO3/pyo3
