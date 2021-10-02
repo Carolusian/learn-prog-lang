@@ -398,6 +398,9 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 
 ## Ch19: Dynamic attributes and properties
 
+- `__new__` vs `__init__`: see also: https://www.youtube.com/watch?v=-zsV0_QrfTw
+  - `__new__` use case: return a different object, all alter arguments before creating the object
+
 ## Monkey patch
 
 - pipes: https://github.com/andybrice/pypework/blob/master/pypework/__init__.py
@@ -410,3 +413,8 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 
 - How to user python type hinting: https://www.youtube.com/watch?v=yScuF1UgGU0
 - [Missing type hints for third party library](https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports)
+
+## Scrapy
+
+- [How to use Scrapy with Django Application](https://alioguzhan.medium.com/how-to-use-scrapy-with-django-application-c16fabd0e62e)
+- [Scrapy-redis 和 Scrapyd 用法详解](https://zhuanlan.zhihu.com/p/44564597)
