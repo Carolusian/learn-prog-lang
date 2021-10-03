@@ -419,6 +419,14 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 - handle attribute deletion: `@member.deleter`, `fdel`, `__delattr__`
 - special attributes and functions for attribute handling: `__class__`, `__dict__`, `dir`, `getattr`, `hasattr`, `setattr`, `vars`
 
+## Ch20: Attribute descriptors
+
+TODO
+
+## Ch21: Class metaprogramming
+
+TODO
+
 ## Monkey patch
 
 - pipes: https://github.com/andybrice/pypework/blob/master/pypework/__init__.py
