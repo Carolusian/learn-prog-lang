@@ -400,6 +400,24 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 
 - `__new__` vs `__init__`: see also: https://www.youtube.com/watch?v=-zsV0_QrfTw
   - `__new__` use case: return a different object, all alter arguments before creating the object
+  - `__new__` actually constuct the instance
+- `attributes`: both attributes and methods, method is just attribute that is callable
+- `properties`: replace public data attribute with accessor methods, without changing the class interface: Uniform access principle
+- `__getattr__`: can implement "virtual attributes" by computing values on the fly for non-existent attribute
+- 2 context managers can be used in the same `with`: `with urlopen(URL) as remote, open(JSON, 'wb') as local`
+- issue: dynamic attribute names from arbitrary resources - key may not be a suitable attribute name
+  - solution 1: raise exception
+  - solution 2: replace the keys with more generic names
+- `shelve.Shelf` and `pickle`: for object serialization
+- `self.__dict__.update(kwargs)`: shortcut to build an instance with attributes from keywords arguments
+- linked record retrieval with properties: class attributes designed to manage instance attributes
+- when creating instance attribute names from data, there is always the risks of bugs due to shadowing of class attributes
+- techniques for implementing dynamic attributes: `__getattr__`, `__hasattr__`, `__getattr__`, `@property`, `__dict__`
+- the instance attributes overrides, or shadows, the class attribute
+- overriding descriptors: `obj.attr` search starts at `obj.__class__`, and only if no property named `attr` in the class, then it looks in the obj instance
+- coding a property factory: this is relevant how to create a descriptor
+- handle attribute deletion: `@member.deleter`, `fdel`, `__delattr__`
+- special attributes and functions for attribute handling: `__class__`, `__dict__`, `dir`, `getattr`, `hasattr`, `setattr`, `vars`
 
 ## Monkey patch
 
