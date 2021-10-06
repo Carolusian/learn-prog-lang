@@ -421,11 +421,37 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 
 ## Ch20: Attribute descriptors
 
-TODO
+- A way to reuse the same access logic for multiple attributes
+- A property factory is a higher-order function that creates a parametrized set of accessor functions, with closures to hold settings like the storage_name
+- `descriptor class`: implements the descriptor protocol for `__set__` and `__get__`
+- `managed class`: where the descriptor instances are declared as attributes
+- `storage attribute`: An instance attribute of the managed instance to hold the value of a managed attribute for the managed instance
+- `managed attribute`: A public class attribute in the managed class that will be handled by a descriptor instance
+- In the example, `Quantity` instance is the class attribute of `LineItem` class
+- `def __set__(self, instance, value)`: `self` is the descriptor instance, `instance` is the managed instance
+- `LineItem` take #4: automate storage attribute names:
+  - use `__counter` to hold the index of automated storage attribute names
+  - can use `setattr` and `getattr` instead of `instance.__dict__` here because there is no collision of storage attribute and managed attribute names
+- `def __get__(self, instance, owner)`: `owner` refers to managed class
+- It is a good practice: let `__get__` to return the descriptor instance when managed attribute is accessed through the class. For introspection and metaprogramming.
+- Django models are descriptors
+- Property factory versus descriptor class: define the property factor as an function.
+  - good: the property factory function does not depends on strange object relationships like `self` and `instance`
+  - bad: not good for reusing code, not straightforward for holding state
+- `LineItem` take #5: a new descriptor:
+  - factoring the code to `AutoStorage` and `Validated` for reusability
+  - only the `validate` abstract method need to be implement in subclass descriptors in `Quantity` and `NonBlank`
+- The Design Pattern: Template Method Pattern
+- Overriding descirptor: because of `__set__`
+- Non-overriding descriptor: TODO
 
 ## Ch21: Class metaprogramming
 
 TODO
+
+## Design patterns
+
+- [Python Design Patterns](https://python-patterns.guide/)
 
 ## Monkey patch
 
