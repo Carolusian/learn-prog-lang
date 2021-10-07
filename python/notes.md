@@ -443,7 +443,24 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
   - only the `validate` abstract method need to be implement in subclass descriptors in `Quantity` and `NonBlank`
 - The Design Pattern: Template Method Pattern
 - Overriding descirptor: because of `__set__`
-- Non-overriding descriptor: TODO
+- Non-overriding descriptor (Non-data descriptor | shadowable descriptor):
+  - **asymmetry**: read attr from instance, if no such instance attr, then a class attr is retrieved; however, assigning the attr will not affect the class at all
+  - If a overriding descriptor implements no `__get__`, just `__set__`: instance attr will shadow the descriptor
+  - If a descriptor does not implement `__set__`, then it is non-overriding, then setting the attribute will shadow the descriptor
+  - Regardless of whether a descriptor is overriding or not, it can be overwritten by assignment to the class (monkey patching)
+  - In order to control the setting of attributes in a class, you have to attach descriptors to the class of the class (metaprogramming)
+- Methods are descriptors: A function in a class becomes a bound method as all user-defined functions have a `__get__` method
+- since functions do not implement `__set__`, they are non-overriding descriptors
+- `a bound method`: a callable wraps the function and binds the managed instance, e.g.: `word.reverse` is actually invoking `Text.reverse.__get__(word)`
+- `__func__` of a bound method: refer to the original function
+- `a bound method object` also has a `__call__` method to handle actual invocation: calling the original function `__func__`, passing `__self__`
+- Descriptor usage tips:
+  - Use property to keep it simple
+  - Read-only descriptors require `__set__`: avoiding setting the attr that shadows the descriptor, the `__set__` can just raise an error
+  - Validation descriptors can work with `__set__` only
+  - Caching can be done efficiently with `__get__` only
+  - Non-special methods can be shadowed by instance attributes
+- Docstring of a descriptor can be used for documentation: `help(LineItem.weight)`, `help(LineItem)`
 
 ## Ch21: Class metaprogramming
 
