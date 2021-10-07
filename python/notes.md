@@ -422,6 +422,7 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 ## Ch20: Attribute descriptors
 
 - A way to reuse the same access logic for multiple attributes
+- A class that provides instances which are deployed as attributes for the managed class
 - A property factory is a higher-order function that creates a parametrized set of accessor functions, with closures to hold settings like the storage_name
 - `descriptor class`: implements the descriptor protocol for `__set__` and `__get__`
 - `managed class`: where the descriptor instances are declared as attributes
@@ -461,6 +462,7 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
   - Caching can be done efficiently with `__get__` only
   - Non-special methods can be shadowed by instance attributes
 - Docstring of a descriptor can be used for documentation: `help(LineItem.weight)`, `help(LineItem)`
+- Worse is better: Richard Gabriel: the requirement to explicitly declare self as the first argument of methods
 
 ## Ch21: Class metaprogramming
 
