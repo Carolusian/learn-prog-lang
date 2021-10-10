@@ -466,7 +466,42 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 
 ## Ch21: Class metaprogramming
 
-TODO
+- the art of creating or customizing classes **at runtime**
+- class decorators solve many of the sample problems that can be done by using metaclasses: **customizing a class the moment it's created**
+  - but class decorator does not affect subclasses
+  - metaclasses: more effective when we want to customize a whole class hierarchy
+- There is distinction and overlap between **import time** and **runtime**
+- `collections.namedtuple`: a function that, given a class name, and attributes, creates a sublass of tuples, allowing retrieving items by name
+- iterable instances can be conveniently unpacked on assignment: `name, weight, _ = rex`
+- type class: `type(cls_name, (object,), cls_attrs)` - this creates a new class
+- Novelty: instance of `type` are classes; `collections.namedtuple` is implemented using source code template and `exec` to make `._source` attribute available
+- class decorator: function that gets a class object and returns the same or modified one
+- Import time: parse source code from top to bottom in one pass, and generates the bytecode to be executed
+- `import` statement: trigger all sorts of `runtime` behavior
+- in usual cases, the interpreter define top level functions at import time, only execute body when invoked at runtime
+- for class, the interpreter execute the body of every class, even nested ones
+- The evaluation time exercies
+- `class factory`: a metaclass is a class that builds classes
+- python classes are instances of type: `type` is the metaclass for most built-in and user-defined classes
+- `type` is an instance of itself to avoid infinite regress, e.g. `str` and `LineItem` is instance of `type` (the metaclass), and subclass of `object`
+- `magic` that cannot be expressed in python: `object` is an instance of `type`, and `type` is a subclass of `object`
+- other metaclasses in standard library: `ABCMeta` and `Enum`
+- metaclass `__init__`: `def __init__(cls, name, bases, attr_dict)`
+- can use `Entity` to inherit `EntityMeta` so that user can just subclass `Entity` for convenience
+- `__prepare__` special method, it must be a class method, invoked by `__new__`, return a mapping to be received by `__new__` as last argument
+- `metaclass` use cases, beside framework:
+  - attribute validation
+  - applying decorators to methods at once
+  - object serialization or data conversion
+  - object-relational mapping
+  - object-based persistency
+  - dynamic translation of class structures from other languages
+- classes as objects:
+  - special attributes: `__mro__`, `__class__`, `__name__`, `__bases__`, `__qualname__`, `__subclasses__()`, `mro()`
+- Alex Martelli: "all problems look like a nail" syndrome
+- PEP 3115 - metaclass in Python 3000
+- Ira R: putting metaclasses to work
+- `__init__subclass__`
 
 ## Design patterns
 
