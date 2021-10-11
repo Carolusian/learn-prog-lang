@@ -34,6 +34,18 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 
 - stack vs heap
 
+### Ch5: Struct
+
+- object's data attributes
+- field init shorthand
+- struct update syntax: `..another_stuct`
+- tuple structs
+- structs storing reference data need to use `lifetime`
+- `{:?}`, `{:#?}`: calls the `std::fmt::Debug`: need `#[derive(Debug)]`
+- method normal don't take ownership with `self`, mostly using `&self` and `&mut self`
+- automatic `referencing` and `dereferencing`
+- `associated functions`: still functions, not method (like static method in OOP), invoked using `::`
+
 ## Reference:
 
 - [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
