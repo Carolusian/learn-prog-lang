@@ -42,9 +42,22 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 - tuple structs
 - structs storing reference data need to use `lifetime`
 - `{:?}`, `{:#?}`: calls the `std::fmt::Debug`: need `#[derive(Debug)]`
-- method normal don't take ownership with `self`, mostly using `&self` and `&mut self`
+- methods normally don't take ownership with `self`, mostly using `&self` and `&mut self`
 - automatic `referencing` and `dereferencing`
 - `associated functions`: still functions, not method (like static method in OOP), invoked using `::`
+
+### Ch6: Enums and Pattern Matching
+
+- for enumerating possible values, similar to algebraic data types
+- variants and values: data values can be put directly in variants
+- we can define methods for enums
+- null references: the billion dollar mistake
+- option
+- `match` and `if let .. else ..`
+
+### Ch7: Modules
+
+TODO
 
 ## Reference:
 
