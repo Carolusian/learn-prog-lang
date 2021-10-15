@@ -59,6 +59,23 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 
 TODO
 
+### Ch9: Error Handling
+
+- unrecoverable: `panic!` macro
+- backtrace: `RUST_BACKTRACE=1 cargo run`
+- recoverable: `Result` enum with `Ok` and `Err` variants
+- shorthands: `unwrap` and `expect`
+- propagating: return `Result<T, E>`
+- shorthand for propagating: `?` operator, can chain method calls.
+
+### Ch10: Generic, Traits, and Lifetimes
+
+- `imp<T> Point<T>` vs `imp Point<f32>` (implement method only on `f32` type)
+- `monomorphization`: turning generic code into specific code, by filling in the concrete types during compile
+- trait restriction: can only implement a trait on a type only if the trait or the type is local to our crate
+- trait bounds
+- `blanket implementation`
+
 ## Reference:
 
 - [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
