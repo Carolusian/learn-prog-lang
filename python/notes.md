@@ -524,3 +524,7 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 
 - [How to use Scrapy with Django Application](https://alioguzhan.medium.com/how-to-use-scrapy-with-django-application-c16fabd0e62e)
 - [Scrapy-redis 和 Scrapyd 用法详解](https://zhuanlan.zhihu.com/p/44564597)
+
+## Main package
+
+- [**main** — Top-level code environment](https://docs.python.org/3/library/__main__.html): `python -m package_name`
