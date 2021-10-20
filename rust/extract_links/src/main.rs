@@ -16,6 +16,7 @@ error_chain! {
 #[tokio::main]
 async fn main() -> Result<()> {
     println!("Hello, world!");
+    // await is future that can be pattern matched
     let res = http_get("https://www.rust-lang.org/en-US/")
         .await?
         .text()
