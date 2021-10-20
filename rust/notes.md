@@ -81,6 +81,8 @@ TODO
 - [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
 - [Idiomatic Rust](https://github.com/mre/idiomatic-rust)
 - [Reading Rust Function Signatures](https://github.com/brson/rust-anthology/blob/master/src/reading-rust-function-signatures.md)
+- [Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/intro.html)
+- [Async Programming in Rust](https://rust-lang.github.io/async-book/01_getting_started/01_chapter.html)
 - [Scala Developer Journey into Rust](http://blog.madhukaraphatak.com/rust-scala-part-1/)
 - [Rust VIM + REPL](https://startupsventurecapital.com/rust-ide-repl-in-vim-11daa921a2c4)
 - [Rust by Example](https://doc.rust-lang.org/rust-by-example/index.html)
