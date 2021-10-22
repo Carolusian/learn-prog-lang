@@ -64,9 +64,10 @@ TODO
 - unrecoverable: `panic!` macro
 - backtrace: `RUST_BACKTRACE=1 cargo run`
 - recoverable: `Result` enum with `Ok` and `Err` variants
-- shorthands: `unwrap` and `expect`
+- shorthands for panic!: `unwrap` and `expect`
 - propagating: return `Result<T, E>`
-- shorthand for propagating: `?` operator, can chain method calls.
+- shorthand for propagating: `?` operator, can chain method calls, and returns Result.
+- Dynamic Err dispatch: Result((), Box<dyn Error>)
 
 ### Ch10: Generic, Traits, and Lifetimes
 
@@ -75,6 +76,10 @@ TODO
 - trait restriction: can only implement a trait on a type only if the trait or the type is local to our crate
 - trait bounds
 - `blanket implementation`
+
+### Ch17: OOP Features in Rust
+
+- `dyn`: dynamic object with common behavior: `pub components: Vec<Box<dyn Draw>>`
 
 ## Reference:
 
