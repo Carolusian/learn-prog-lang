@@ -2,14 +2,24 @@
 extern crate minigrep;
 
 use std::env;
+use std::error::Error;
+use std::process;
 use minigrep::Config;
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>>{
     let args: Vec<String> = env::args().collect();
 
-    let query = &args[1];
-    let filename = &args[2];
+    // // let config = Config::new(&args);
+    // // match can be refactored into unwrap_or_else
+    // match config {
+    //     Ok(c) => println!("{:?}", c),
+    //     Err(msg) => println!("{}", msg),        
+    // };
 
-    let config = Config::new(query, filename);
-    println!("{:?}", args);
+    let config = Config::new(&args).unwrap_or_else(|err| {
+        println!("Porblem parsing arguments: {}", err);
+        process::exit(1);
+    });
+
+    minigrep::run(config)
 }

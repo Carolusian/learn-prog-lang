@@ -33,6 +33,7 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 ### Ch4: Ownership
 
 - stack vs heap
+- `&` is normally used before type or lifetime type during declaration
 
 ### Ch5: Struct
 
@@ -61,6 +62,7 @@ TODO
 
 ### Ch9: Error Handling
 
+- `Ok` and `Err` are just enum variants
 - unrecoverable: `panic!` macro
 - backtrace: `RUST_BACKTRACE=1 cargo run`
 - recoverable: `Result` enum with `Ok` and `Err` variants
@@ -93,3 +95,5 @@ TODO
 - [Rust by Example](https://doc.rust-lang.org/rust-by-example/index.html)
 - [Extending Python with Rust](https://developers.redhat.com/blog/2017/11/16/speed-python-using-rust#what_is_rust_)
   - See also PyO3: https://github.com/PyO3/pyo3
+- Useful macros:
+  - println!, format!, write!, assert!
