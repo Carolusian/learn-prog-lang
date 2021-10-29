@@ -79,9 +79,23 @@ TODO
 - trait bounds
 - `blanket implementation`
 
+### Ch13: Iterators and Closures
+
+- `closures`: able to infer types reliably
+- `move`: to force take ownership
+- `Iterator` trait: `next` method, return Some(Self::Item) or None
+- Type `Item`: associated type to the trait
+- consumer methods: consuming adaptors, `sum`, `collect`
+- producer methods: iterator adaptors, lazy, have to call consumer methods
+- iterator is fast, zero cost abstraction
+
 ### Ch17: OOP Features in Rust
 
 - `dyn`: dynamic object with common behavior: `pub components: Vec<Box<dyn Draw>>`
+
+### Ch20: Final Project - Building a Multithreaded Web Server
+
+- compiler driven development: `cargo check`
 
 ## Reference:
 
@@ -96,4 +110,4 @@ TODO
 - [Extending Python with Rust](https://developers.redhat.com/blog/2017/11/16/speed-python-using-rust#what_is_rust_)
   - See also PyO3: https://github.com/PyO3/pyo3
 - Useful macros:
-  - println!, format!, write!, assert!
+  - println!, format!, write!, assert!, eprintln!
