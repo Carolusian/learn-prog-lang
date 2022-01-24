@@ -17,7 +17,7 @@ fn main() -> Result<(), Box<dyn Error>>{
     // };
 
     let config = Config::new(&args).unwrap_or_else(|err| {
-        println!("Porblem parsing arguments: {}", err);
+        println!("Problem parsing arguments: {}", err);
         process::exit(1);
     });
 

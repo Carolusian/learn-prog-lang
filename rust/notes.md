@@ -21,6 +21,7 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 
 - `rustup` and hello world
 - `cargo`: build, check, run
+- `cargo install cargo-edit`, then `cargo add {package_name}`
 
 ### Ch3: Common programming concepts
 
@@ -111,3 +112,5 @@ TODO
   - See also PyO3: https://github.com/PyO3/pyo3
 - Useful macros:
   - println!, format!, write!, assert!, eprintln!
+- [Rust + Electron + FFI](https://titanwolf.org/Network/Articles/Article?AID=166184ad-585a-4d9b-b755-b1160613cb06)
+- [Sample project: plagiarism checker](https://github.com/frizensami/plagiarism-basic)

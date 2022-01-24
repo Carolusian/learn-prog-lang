@@ -519,6 +519,15 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 
 - How to user python type hinting: https://www.youtube.com/watch?v=yScuF1UgGU0
 - [Missing type hints for third party library](https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports)
+- Mypy tips:
+  - can ignore missing imports for 3rd packages with type definitions
+  - `@admin.display(booleam=True)` instead of `enabled.boolean=True`
+  - use `import ... as ...` for google cloud packages
+  - use assert if you are certain with a variable is not `None`
+  - use `strategies: Dict[str, Callable[..., Optional[Response]]]` if you have functions as values of a dict
+  - use `TypedDict` for dict as arguments
+  - Sequence is covariant, List is invariant
+  - use `Union` for ternary operator results
 
 ## Scrapy
 
