@@ -1,6 +1,4 @@
 // See: An I/O project at https://doc.rust-lang.org/book/ch12-00-an-io-project.html
-extern crate minigrep;
-
 use std::env;
 use std::error::Error;
 use std::process;

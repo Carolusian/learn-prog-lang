@@ -51,3 +51,4 @@
 # References
 
 - paket: https://fsprojects.github.io/Paket/paket-and-dotnet-cli.html
+- fsi quit: https://github.com/fsharp/fsharp/issues/92

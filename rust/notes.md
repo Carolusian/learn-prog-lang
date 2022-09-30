@@ -34,14 +34,19 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 ### Ch4: Ownership
 
 - stack vs heap
+- `*` is the dereferencing operator
+- `&` create a reference which does not own the borrowed value
 - `&` is normally used before type or lifetime type during declaration
+- `&mut var`: exclusive borrowing, only one mutable reference is allowed at the same time
+- `&var`: shared borrowing, multiple borrowers are allowed
+- `Slices` slices let you reference a contiguous sequence of elements in a collection
 
 ### Ch5: Struct
 
 - object's data attributes
 - field init shorthand
 - struct update syntax: `..another_stuct`
-- tuple structs
+- **tuple structs**
 - structs storing reference data need to use `lifetime`
 - `{:?}`, `{:#?}`: calls the `std::fmt::Debug`: need `#[derive(Debug)]`
 - methods normally don't take ownership with `self`, mostly using `&self` and `&mut self`
@@ -89,6 +94,24 @@ TODO
 - consumer methods: consuming adaptors, `sum`, `collect`
 - producer methods: iterator adaptors, lazy, have to call consumer methods
 - iterator is fast, zero cost abstraction
+
+### Ch14: Cargo
+
+- [profile.dev] vs [profile.release]: different profile settings, compile time affected
+- workspace: managing multiple workspace
+
+### Ch15: Smart Pointer
+
+- `Box::new(5)`: store data on head rather than stack without performance overhead
+  - unknow size during compilation
+  - transfer ownership of large data without copying
+  - want to own value of a particular trait rather than type
+- `cons list`: lisp expression from Lisp
+- `indirection`: storing a pointer instead of a value
+- implicit Deref Coercions: `*y` equals to `*(y.deref())`, see `std::ops::Deref` and `DerefMut` trait
+- `Drop` trait
+- `Rc<T>`: like Box, and enable multiple ownership
+- `RefCell<T>`: like Box, enable interior mutability
 
 ### Ch17: OOP Features in Rust
 

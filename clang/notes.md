@@ -6,7 +6,9 @@
 - `&`:
   - No declaration
   - consuming as the address of a variable
+  - `&variable_with_value`
 - `*` is closing related to array
+- `int *addressOfDigit = &digit;`
 
 ## References:
 
