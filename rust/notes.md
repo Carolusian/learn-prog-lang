@@ -118,6 +118,20 @@ TODO
 - `Rc<T>`: like Box, and enable multiple ownership
 - `RefCell<T>`: like Box, enable interior mutability
 
+## Ch16: Fearless Concurrency
+
+- `move`: for the closures in the threads to take ownership, so main thread cannot somehow invalidate it
+- message passing: do not communicate by sharing memory, share by communicate
+- `std::sync::mpsc`: multiple producer single consumer:
+  - `let (tx, rx) = mpsc::channel();`
+  - the above defines a transmitter and a receiver
+  - combine `loop` with `try_recv` as it does not block
+  - `rx.recv()` or treat `rx` as iterator using `for received in rx`
+- `Mutex` for mutual exclusion, only one thread to access at any given time
+  - `Arc<T>` Atomic Reference Counting
+  - Arc is also interior mutable
+  - See: how to count from 1 to 10 with threads safely
+
 ### Ch17: OOP Features in Rust
 
 - `dyn`: dynamic object with common behavior: `pub components: Vec<Box<dyn Draw>>`

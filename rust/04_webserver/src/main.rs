@@ -6,6 +6,8 @@ use std::{
     time::Duration,
 };
 
+use webserver::ThreadPool;
+
 fn handle_connection(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&mut stream);
     // Vec<_> indicate a vector catching all values
@@ -36,13 +38,16 @@ fn handle_connection(mut stream: TcpStream) {
 
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:8787").unwrap();
+    let pool = ThreadPool::new(4);
 
     // this line start to block, so the "hello world" won't display
     for stream in listener.incoming() {
         let stream = stream.unwrap();
 
         println!("Connection established");
-        handle_connection(stream);
+        pool.execute(move || {
+            handle_connection(stream);
+        });
     }
     println!("Hello, world!");
 }
