@@ -13,6 +13,11 @@
   - `unwrap_or` is like `getOrElse` in scala
   - `unwrap` is like `unwrap`, but can panic, so it is not encouraged
 
+### Tips
+
+- Quick handson with less Error handling, e.g. panic, and unwrap, then can refactor
+- Don't over design, it make the handson coding slow and different, because you cater too many things
+
 ## Book: The Rust Programming Language
 
 NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts about ownership, borrowing and lifetime
@@ -137,3 +142,5 @@ TODO
   - println!, format!, write!, assert!, eprintln!
 - [Rust + Electron + FFI](https://titanwolf.org/Network/Articles/Article?AID=166184ad-585a-4d9b-b755-b1160613cb06)
 - [Sample project: plagiarism checker](https://github.com/frizensami/plagiarism-basic)
+- [Rust: Recommended VSCode Extensions to Setup Your IDE](https://www.becomebetterprogrammer.com/rust-recommended-vscode-extensions/)
+  - Rust-analyzer / Better TOML / CodeLLDB / Crates / Error Lens
