@@ -52,3 +52,5 @@
   - `new` needs `delete`
   - `using` alias: typedef
   - `shared_ptr`
+- [Daytime.2 - A synchronous TCP daytime server](https://www.boost.org/doc/libs/1_54_0/doc/html/boost_asio/tutorial/tutdaytime2.html)
+  - initialization list after constructor
