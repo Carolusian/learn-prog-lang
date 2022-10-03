@@ -2,15 +2,18 @@
 
 - `*`:
   - declaring (as variable or function parameters) as pointer (address)
-  - consuming (use or assign at right side of = ) as value (memory store the value)
+  - dereference/consuming (use or assign at right side of = ) as value (memory store the value)
+  - a variable pointing to address of another variable, e.g. pointer allocated in stack, pointing to memory address in heap
   - pass by pointer
 - `&`:
   - No declaration
   - consuming as the address of a variable
   - `&variable_with_value`
+  - a reference has the same memory address
   - pass by reference: only in c++ (similar to pass by pointer)
 - `*` is closing related to array
 - `int *addressOfDigit = &digit;`
+- see: https://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/
 
 ## Package Manager: vcpkg
 
@@ -46,3 +49,6 @@
   - `.` vs `->`: dot applied to actual object, arrow used with a pointer to the object
   - `strongThis`: closure in lambda
   - list initialization
+  - `new` needs `delete`
+  - `using` alias: typedef
+  - `shared_ptr`
