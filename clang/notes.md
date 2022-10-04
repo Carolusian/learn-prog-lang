@@ -15,6 +15,21 @@
 - `int *addressOfDigit = &digit;`
 - see: https://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/
 
+## Package Manager: conan (better for cross compiling)
+
+### basic steps
+
+- `brew install conan`
+- create `conanfile.txt` and set `requires` and `generators`
+- update `~/.conan/settings.yml` for compiler versions if the compiler on the system is invalid
+- `mkdir build && cd build` and `conan install .. --build=missing`
+- `cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release`
+- `cmake --build .`
+
+### cross compile
+
+-
+
 ## Package Manager: vcpkg
 
 ### basic steps
@@ -54,3 +69,4 @@
   - `shared_ptr`
 - [Daytime.2 - A synchronous TCP daytime server](https://www.boost.org/doc/libs/1_54_0/doc/html/boost_asio/tutorial/tutdaytime2.html)
   - initialization list after constructor
+- [Cross-compilation of simple HTTP-service on Ubuntu 20.04 (GCC aarch64 Conan CMake )](https://vg-blog.tech/archives/1500)
