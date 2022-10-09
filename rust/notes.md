@@ -154,6 +154,7 @@ TODO
   - See also PyO3: https://github.com/PyO3/pyo3
 - Useful macros:
   - println!, format!, write!, assert!, eprintln!, todo!, asm!, global_asm!
+  - trace!, debug!, warn!, info! (in log crate)
 - [Rust + Electron + FFI](https://titanwolf.org/Network/Articles/Article?AID=166184ad-585a-4d9b-b755-b1160613cb06)
 - [Sample project: plagiarism checker](https://github.com/frizensami/plagiarism-basic)
 - [Rust: Recommended VSCode Extensions to Setup Your IDE](https://www.becomebetterprogrammer.com/rust-recommended-vscode-extensions/)
