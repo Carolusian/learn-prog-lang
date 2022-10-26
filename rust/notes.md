@@ -69,7 +69,15 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 
 ### Ch7: Modules
 
-TODO
+- a `package` is a bundle of one or more `crates`, defined in `Cargo.toml`
+- `modules` cheatsheet:
+  - `crate root` > declaring modules (module.rs or module/mod.rs) > declaring submodules
+  - path of modules: `crate::modulde::submodule::Struct_or_fn`
+  - private vs public
+  - `use`: use module code in shortcut, can be combined with curly braces
+  - `pub use`: import and re-export
+
+### Ch8: Common Collections
 
 ### Ch9: Error Handling
 
