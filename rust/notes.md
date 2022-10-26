@@ -79,6 +79,21 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 
 ### Ch8: Common Collections
 
+- `vector`, `String`, `hash map`
+- `vector`:
+  - `vec!` macro is syntax sugar to create new vector with initial values
+  - `[] vs get`: for reading element
+  - `for i in &mut v`: and dereference operator
+  - use Enum to store multiple types in vector
+- `String`:
+  - `String::from("initial contents")`
+  - `push_str` and `push`: string slice and character
+  - `"3A".chars()` vs `"3A".bytes`
+- ## `hash map`:
+  - `use std::collections::HashMap`
+  - `.copied` to convert `Option<&i32>` to `Option<i32>`
+  - `for (key, value) in &scores`
+
 ### Ch9: Error Handling
 
 - `Ok` and `Err` are just enum variants
