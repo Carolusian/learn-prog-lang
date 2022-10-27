@@ -178,6 +178,8 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 - Useful macros:
   - println!, format!, write!, assert!, eprintln!, todo!, asm!, global_asm!
   - trace!, debug!, warn!, info! (in log crate)
+- [Common traits](https://stevedonovan.github.io/rustifications/2018/09/08/common-rust-traits.html):
+  - ToString, fmt::Display, #[derive(Debug)], Default, From/Into, Clone/Copy, FromStr
 - [Rust + Electron + FFI](https://titanwolf.org/Network/Articles/Article?AID=166184ad-585a-4d9b-b755-b1160613cb06)
 - [Sample project: plagiarism checker](https://github.com/frizensami/plagiarism-basic)
 - [Rust: Recommended VSCode Extensions to Setup Your IDE](https://www.becomebetterprogrammer.com/rust-recommended-vscode-extensions/)
