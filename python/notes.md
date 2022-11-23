@@ -537,3 +537,8 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 ## Main package
 
 - [**main** — Top-level code environment](https://docs.python.org/3/library/__main__.html): `python -m package_name`
+
+## GUI
+
+- [PyQt Layouts: Create Professional-Looking GUI Applications](https://realpython.com/python-pyqt-layout/)
+- [QML Extension for Visual Studio Code: Develop Qt Quick Apps with VS Code and Felgo Live](https://blog.felgo.com/develop-qt-quick-apps-with-visual-studio-code-qml-extension)
