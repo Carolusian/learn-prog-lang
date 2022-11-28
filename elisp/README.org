@@ -123,6 +123,7 @@
 - cancel-debug-on-entry
 - debugging infinite loops: `C-g` to set debug-on-quite to t
 - edebug: source level debugger: `M-x edebug-defun RET`
+- `C-g`: halt evalution
 
 * basics
 ** colon symbol: `:`
@@ -178,34 +179,101 @@ CLOCK: [2022-11-24 Thu 22:12]--[2022-11-24 Thu 23:28] =>  1:16
 :END:
 
 #+begin_src emacs-lisp :tangle yes
+(require 'dash)
+(require 'org-ml)
+
+(defun format-start (timestamp)
+  (cond ((org-element-property :hour-start timestamp)
+         (format "%s-%s-%s %s:%s:00"
+                 (org-element-property :year-start timestamp)
+                 (org-clock-csv--pad
+                  (org-element-property :month-start timestamp))
+                 (org-clock-csv--pad
+                  (org-element-property :day-start timestamp))
+                 (org-clock-csv--pad
+                  (org-element-property :hour-start timestamp))
+                 (org-clock-csv--pad
+                  (org-element-property :minute-start timestamp))))
+        ((org-element-property :year-start timestamp)
+         (format "%s-%s-%s"
+                 (org-element-property :year-start timestamp)
+                 (org-clock-csv--pad
+                  (org-element-property :month-start timestamp))
+                 (org-clock-csv--pad
+                  (org-element-property :day-start timestamp))))
+        ))
+
+(defun format-end (timestamp)
+  (cond ((org-element-property :hour-end timestamp)
+         (format "%s-%s-%s %s:%s:00"
+                 (org-element-property :year-end timestamp)
+                 (org-clock-csv--pad
+                  (org-element-property :month-end timestamp))
+                 (org-clock-csv--pad
+                  (org-element-property :day-end timestamp))
+                 (org-clock-csv--pad
+                  (org-element-property :hour-end timestamp))
+                 (org-clock-csv--pad
+                  (org-element-property :minute-end timestamp))))
+        ((org-element-property :year-end timestamp)
+         (format "%s-%s-%s"
+                 (org-element-property :year-end timestamp)
+                 (org-clock-csv--pad
+                  (org-element-property :month-end timestamp))
+                 (org-clock-csv--pad
+                  (org-element-property :day-end timestamp))))
+        ))
+
 (defun org-clock-csv--parse-element1 (element title default-category)
   "Ingest clock ELEMENT and produces a plist of its relevant
 properties."
-      (let* ((x (org-ml-parse-this-element)))
-        (with-output-to-temp-buffer "*test*"
-          (print x)))
-      (list :task "task"
-            :headline "headline"))
+  (let* ((headline (org-element-property :raw-value element))
+         (level (org-element-property :level element))
+         (priority (org-element-property :priority element))
+         (tag (org-element-property :tags element))
+         (todo-keyword (org-element-property :todo-keyword element))
+         (todo-status (org-element-property :todo-type element))
+         (scheduled (org-element-property :scheduled element))
+         (deadline (org-element-property :deadline element))
+         (closed (org-element-property :closed element))
+         (scheduled-start (format-start scheduled))
+         (scheduled-end (format-end scheduled))
+         (deadline-start (format-start deadline))
+         (deadline-end (format-end deadline))
+         (closed-time (format-start closed)))
+    (list :headline headline
+          :level level
+          :priority priority
+          :tag tag
+          :todo todo-keyword
+          :status todo-status
+          :scheduled_start scheduled-start
+          :scheduled_end scheduled-start
+          :deadline_start deadline-start
+          :deadline_end deadline-end
+          :closed closed-time)))
 
 (defun org-clock-csv--get-entries1 (filelist)
   "Retrieves clock entries from files in FILELIST.
 When NO-CHECK is non-nil, skip checking if all files exist."
   (cl-loop for file in filelist append
            (with-current-buffer (find-file-noselect file)
-	     (let* ((ast (org-element-parse-buffer))
-		    (title (org-clock-csv--get-org-data 'TITLE ast file))
-		    (category (org-clock-csv--get-org-data 'CATEGORY ast "")))
-            ;;(with-output-to-temp-buffer "*xah temp out*"
-            ;;  (print ast))
-	       (org-element-map ast 'headline
-		 (lambda (c) (org-clock-csv--parse-element1 c title category))
-		     )))))
+         (let* ((ast (org-element-parse-buffer))
+            (title (org-clock-csv--get-org-data 'TITLE ast file))
+            (category (org-clock-csv--get-org-data 'CATEGORY ast "")))
+               ;;(with-output-to-temp-buffer "*xah temp out*"
+               ;;  (print ast))
+           (org-element-map ast 'headline
+         (lambda (c) (org-clock-csv--parse-element1 c title category)))))))
 (setq filelist '("test.org"))
 (setq entries (org-clock-csv--get-entries1 filelist))
 #+end_src
 
 #+RESULTS:
-| :task | task | :headline | headline |
+| :headline | tasks sample      | :level | 1 | :priority | nil | :tag | nil         | :todo | DOING | :status | todo | :scheduled_start | 2022-11-26          | :scheduled_end | 2022-11-26          | :deadline_start | nil                 | :deadline_end | nil                 | :closed | nil                 |
+| :headline | a normal headline | :level | 1 | :priority | nil | :tag | (work life) | :todo | nil   | :status | nil  | :scheduled_start | nil                 | :scheduled_end | nil                 | :deadline_start | nil                 | :deadline_end | nil                 | :closed | nil                 |
+| :headline | subtask 1         | :level | 2 | :priority |  65 | :tag | nil         | :todo | DONE  | :status | done | :scheduled_start | 2022-11-28 12:00:00 | :scheduled_end | 2022-11-28 12:00:00 | :deadline_start | 2022-12-12 12:00:00 | :deadline_end | 2022-12-12 14:00:00 | :closed | 2022-11-28 18:15:00 |
+| :headline | subtask 2         | :level | 2 | :priority |  66 | :tag | nil         | :todo | TODO  | :status | todo | :scheduled_start | nil                 | :scheduled_end | nil                 | :deadline_start | nil                 | :deadline_end | nil                 | :closed | nil                 |
 
 ** DONE another sample todo tasks
 CLOSED: [2022-11-25 Fri 00:01]
