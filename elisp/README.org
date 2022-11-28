@@ -1,0 +1,221 @@
+
+* An Introduction to Programming in Emacs Lisp - Robert J Chassell
+** A Note for Novices
+- Keychord: combination of key strokes
+- `C-u`: universal argument
+** 1 - Lisp List
+- (): parentheses mark the boundaries of the list
+- Powerful feature of Lisp: Since program looks like data, one program may easily serve as data for another
+- Lisp consists of parentheses surrounding atoms
+- `'`: do nothing with the list, other than take it as written
+- `C-x C-e` at the right parenthesis of the list, `eval-last-sexp`
+- *Backtrace*: read from bottom up, it tells you what the Emacs did
+- `sexp`: abbreviation for symbolic expression
+- Workflow of list interpreter
+- `special forms`: macros
+- The interpreter works on the innermost list first, and left to right
+- `elc` extension for byte-compile-file
+- side effect: e.g. move cursor or copy a file
+- variable: do not need parentheses
+- `p`: stands for `predicate`
+- `number-to-string`
+- `message`: print to echo area
+- `setq`: `set` with quoted first argument; can assign mutiple variables
+** 2 - Practicing Evaluation
+- `nil`: nothing and false
+- `C-u C-x C-e`: appear in *scratch* rather in echo area
+- `current-buffer` vs `other-buffer`
+- `switch-to-buffer`: `set-buffer` is used more often
+- `(point)`: return the number of characters where the cursor is
+** 3 - How to Write Function Definitions
+- The name you use in an arugment list private to that particular definition
+- Install the function
+- Describe function
+- How to write function: install it; test it; make fixes or enhancements and install it again
+- `M-x`: `(interactive)` functions: usally for side effect instead of returning a value
+- `C-u number`: prefix argument
+- `(interactive "p")`: pass prefix argument to the function
+  + different options for interactive, see the book
+- Install code permanently, `.emacs` file
+- `let`: create a name for a local variable that overshadows any use of same name outside
+  + template: `(let varlist body...)`
+  + return value of the last expression
+- The `if` special form
+- `equal` vs `eq` vs `=`
+- "false" is nil, anything else is true `t`
+- `()` and `nil` is the same
+- `save-excursion`: save the location of point, execute the body, restore to previous location
+  + Whereever the cursor is, that is point
+  + often occurs within the body of a `let` expression
+** 4 - A Few Buffer-Related Functions
+- (push-mark (point))
+- (push-mark (point-max) nil t)
+- (goto-char (point-min))
+- (insert-buffer-substring)
+- (append-to-buffer): many function definitions use `let, save-excursion, and set-buffer` form
+** 5 - A Few More Complex Functions
+- `barf-if-buffer-read-only`: error if buffer is read only
+- `insert-buffer`
+- `or`: evaluate each argument in turn, return the value of the first that is not nil
+- `&optional`
+- \\[universal-argument] in doc string: substitute whatever key bound to '[...]'
+- `bufferp`: return t if its argument is a buffer
+** 6 - Narrowing and Widening
+- (narrow-to-region) and (widen)
+- (save-restriction) special form: keep track of whatever narrowing is in effect
+  + (save-excursion
+      save-restriction...)
+  + (save-restriction
+      (widen)
+      (save-excursion...))
+- (what-line): number of the line the cursor is located
+- (1+ number): the `++` function in other languages
+** 7 - car, cdr, cons: Fundamental Functions
+- cons: construct list, e.g. `(cons 'pine '(fir oak maple))`
+- car and cdr are non-destructive
+- length
+- nthcdr: take the CDR of a list repeatedly
+- nth: CAR of the result returned by nthcdr
+- setcar: replace instead of add
+- setcdr: replace instead of append
+** 8 - Cutting and Storing Text
+- Cut or clip text out of a buffer
+- The list that holds the pieces of text is called the kill ring
+- `zap-to-char`: the text that zap-to-char removes is put in the kill ring
+- (interactive "p\ncZap to char: "): lower case 'c' indicates that interactive expects a prompt
+- progn special form: each of the arguments evaluated in sequence, and return the value of the last one
+- defvar and asterisk: global dynamic variable, always mark special variables with * in the names
+** 11 - Loops and Recursion
+- Two primary ways: while vs recursion
+- oft-used technique: set the value of the list to be the CDR of the list
+- dolist: (dolist (element list value) ...)
+- dotimes: (dotimes (number 3) ...)
+- recursion:
+  + `cond` speicial form: conditional
+  + patterns:
+    * every: action performed on every element of a list
+    * accumulate: result is accumulated with the results performed on other elements
+    * keep: like filter
+** 12 - Regular Expression Searches
+- (forward-sentence)
+- (forward-paragraph)
+- '\\' the first backslash quotes the second backslash, the second baskslash indicate the parentheses or vertical bar is special
+- (re-search-forward): searches for regular expression
+- `let*` special form: set each variable in sequence, the latter one can use eariler ones
+** 16 - Your .emacs File
+- "You don't have to like Emacs to like it" - customize it for your own needs
+- site-load.el and site-init.el: Two site-wide initialization files
+- loadup.el, startup.el and loaddefs.el: in the lisp directory which worth perusing
+- defcustom: specify variables
+  + 1st: name of the variable
+  + 2nd: initial value
+  + 3rd: documentation
+  + 4th and subsequent: types and options
+- (add-hook 'text-mode-hook 'turn-on-auto-fill)
+- (setq-default): sets values only in buffers that do not have their own local values for the variable
+- (global-set-key) and (global-unset-key): key bindings
+- keymaps
+- (load "~/emacs/slowsplit"): loading `el` files
+- (setq load-path (cons ...)): adds the whole directory to load path
+- autoload: let emacs starts quicker
+** 17 - Debugging
+- debug-on-entry: `M-x debug-on-entry RET function-name RET`, then d d d d d to step further
+- cancel-debug-on-entry
+- debugging infinite loops: `C-g` to set debug-on-quite to t
+- edebug: source level debugger: `M-x edebug-defun RET`
+
+* basics
+** colon symbol: `:`
+- usally used as keys in property list
+
+#+begin_src emacs-lisp :tangle yes
+(setq orgfiles-plist
+      '("orgfiles"
+        :base-directory "~/org/"
+        :base-extension "org"
+        :publishing-directory "/ssh:user@host:~/html/notebook/"
+        :publishing-function org-html-publish-to-html
+        :exclude "PrivatePage.org" ;; regexp
+        :headline-levels 3
+        :section-numbers nil
+        :with-toc nil
+        :html-head "<link rel=\"stylesheet\"
+                  href=\"../other/mystyle.css\" type=\"text/css\"/>"
+        :html-preamble t))
+#+end_src
+* sample code
+** TODO get information of the headlines
+SCHEDULED: <2022-11-26 Sat>
+
+#+begin_src elisp
+(require 'org-ml)
+(defun tt-get-heading-info ()
+  "show org-heading-components result"
+  (interactive)
+  (let ((x (org-heading-components)))
+    (with-output-to-temp-buffer "*xah temp out*"
+      (print x))))
+
+(defun tt-show-all-prop-keys ()
+  "show all properties in buffer"
+  (interactive)
+  (let ((x (org-buffer-property-keys)))
+    ;; (org-ml-headline-get-logbook-items)
+    (with-output-to-temp-buffer "*xah temp out*"
+      (print x))))
+
+(tt-get-heading-info)
+;; (tt-show-all-prop-keys)
+#+end_src
+
+#+RESULTS:
+| 2 | 2 | TODO | nil | get information of the headlines | nil |
+
+** DONE parse sample todo tasks                                     :sampletag:
+CLOSED: [2022-11-24 Thu 23:28] SCHEDULED: <2022-11-24 Thu 22:10-22:20>
+:LOGBOOK:
+CLOCK: [2022-11-24 Thu 22:12]--[2022-11-24 Thu 23:28] =>  1:16
+:END:
+
+#+begin_src emacs-lisp :tangle yes
+(defun org-clock-csv--parse-element1 (element title default-category)
+  "Ingest clock ELEMENT and produces a plist of its relevant
+properties."
+      (let* ((x (org-ml-parse-this-element)))
+        (with-output-to-temp-buffer "*test*"
+          (print x)))
+      (list :task "task"
+            :headline "headline"))
+
+(defun org-clock-csv--get-entries1 (filelist)
+  "Retrieves clock entries from files in FILELIST.
+When NO-CHECK is non-nil, skip checking if all files exist."
+  (cl-loop for file in filelist append
+           (with-current-buffer (find-file-noselect file)
+	     (let* ((ast (org-element-parse-buffer))
+		    (title (org-clock-csv--get-org-data 'TITLE ast file))
+		    (category (org-clock-csv--get-org-data 'CATEGORY ast "")))
+            ;;(with-output-to-temp-buffer "*xah temp out*"
+            ;;  (print ast))
+	       (org-element-map ast 'headline
+		 (lambda (c) (org-clock-csv--parse-element1 c title category))
+		     )))))
+(setq filelist '("test.org"))
+(setq entries (org-clock-csv--get-entries1 filelist))
+#+end_src
+
+#+RESULTS:
+| :task | task | :headline | headline |
+
+** DONE another sample todo tasks
+CLOSED: [2022-11-25 Fri 00:01]
+:LOGBOOK:
+CLOCK: [2022-11-24 Thu 23:01]--[2022-11-25 Fri 00:01] =>  1:00
+:END:
+** TODO the third todo
+SCHEDULED: <2022-11-25 Fri>
+*** TODO the fourth todo
+SCHEDULED: <2022-11-26 Sat>
+:LOGBOOK:
+CLOCK: [2022-11-24 Thu 23:01]--[2022-11-25 Fri 00:01] =>  1:00
+:END:
