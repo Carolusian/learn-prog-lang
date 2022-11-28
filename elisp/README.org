@@ -179,10 +179,15 @@ CLOCK: [2022-11-24 Thu 22:12]--[2022-11-24 Thu 23:28] =>  1:16
 :END:
 
 #+begin_src emacs-lisp :tangle yes
-(require 'dash)
-(require 'org-ml)
+(require 'org-clock-csv)
 
-(defun format-start (timestamp)
+(defcustom org-task-csv-header "task,parents,level,priority,todo,status,scheduled_start,scheduled_end,deadline_start,deadline_end,closed,tags"
+  "Header for the CSV output.
+Be sure to keep this in sync with changes to
+`org-task-csv-row-fmt'."
+  :group 'org-task-csv)
+
+(defun org-task-csv--format-start (timestamp)
   (cond ((org-element-property :hour-start timestamp)
          (format "%s-%s-%s %s:%s:00"
                  (org-element-property :year-start timestamp)
@@ -203,7 +208,7 @@ CLOCK: [2022-11-24 Thu 22:12]--[2022-11-24 Thu 23:28] =>  1:16
                   (org-element-property :day-start timestamp))))
         ))
 
-(defun format-end (timestamp)
+(defun org-task-csv--format-end (timestamp)
   (cond ((org-element-property :hour-end timestamp)
          (format "%s-%s-%s %s:%s:00"
                  (org-element-property :year-end timestamp)
@@ -224,56 +229,120 @@ CLOCK: [2022-11-24 Thu 22:12]--[2022-11-24 Thu 23:28] =>  1:16
                   (org-element-property :day-end timestamp))))
         ))
 
-(defun org-clock-csv--parse-element1 (element title default-category)
+(defun org-task-csv--parse-element (element title default-category)
   "Ingest clock ELEMENT and produces a plist of its relevant
 properties."
-  (let* ((headline (org-element-property :raw-value element))
-         (level (org-element-property :level element))
-         (priority (org-element-property :priority element))
-         (tag (org-element-property :tags element))
-         (todo-keyword (org-element-property :todo-keyword element))
-         (todo-status (org-element-property :todo-type element))
-         (scheduled (org-element-property :scheduled element))
-         (deadline (org-element-property :deadline element))
-         (closed (org-element-property :closed element))
-         (scheduled-start (format-start scheduled))
-         (scheduled-end (format-end scheduled))
-         (deadline-start (format-start deadline))
-         (deadline-end (format-end deadline))
-         (closed-time (format-start closed)))
-    (list :headline headline
-          :level level
-          :priority priority
-          :tag tag
-          :todo todo-keyword
-          :status todo-status
-          :scheduled_start scheduled-start
-          :scheduled_end scheduled-start
-          :deadline_start deadline-start
-          :deadline_end deadline-end
-          :closed closed-time)))
+  (when (org-element-property :todo-keyword element)
+    (let* ((task (org-element-property :raw-value element))
+           (headlines (org-clock-csv--find-headlines element))
+           (headlines-values (mapcar (lambda (h) (org-element-property :raw-value h)) headlines ))
+           (parents (car headlines-values))
+           (level (org-element-property :level element))
+           (priority (org-element-property :priority element))
+           (tags (mapconcat #'identity
+                            (org-element-property :tags element) ":"))
+           (todo-keyword (org-element-property :todo-keyword element))
+           (todo-status (org-element-property :todo-type element))
+           (scheduled (org-element-property :scheduled element))
+           (deadline (org-element-property :deadline element))
+           (closed (org-element-property :closed element))
+           (scheduled-start (org-task-csv--format-start scheduled))
+           (scheduled-end (org-task-csv--format-end scheduled))
+           (deadline-start (org-task-csv--format-start deadline))
+           (deadline-end (org-task-csv--format-end deadline))
+           (closed-time (org-task-csv--format-start closed)))
+      (list :task task
+            :parents parents
+            :level level
+            :priority priority
+            :tags tags
+            :todo todo-keyword
+            :status todo-status
+            :scheduled_start scheduled-start
+            :scheduled_end scheduled-start
+            :deadline_start deadline-start
+            :deadline_end deadline-end
+            :closed closed-time))))
 
-(defun org-clock-csv--get-entries1 (filelist)
+(defun org-task-csv--get-entries (filelist)
   "Retrieves clock entries from files in FILELIST.
 When NO-CHECK is non-nil, skip checking if all files exist."
   (cl-loop for file in filelist append
            (with-current-buffer (find-file-noselect file)
-         (let* ((ast (org-element-parse-buffer))
-            (title (org-clock-csv--get-org-data 'TITLE ast file))
-            (category (org-clock-csv--get-org-data 'CATEGORY ast "")))
+             (let* ((ast (org-element-parse-buffer))
+                    (title (org-clock-csv--get-org-data 'TITLE ast file))
+                    (category (org-clock-csv--get-org-data 'CATEGORY ast "")))
                ;;(with-output-to-temp-buffer "*xah temp out*"
                ;;  (print ast))
-           (org-element-map ast 'headline
-         (lambda (c) (org-clock-csv--parse-element1 c title category)))))))
+               (org-element-map ast 'headline
+                 (lambda (c) (org-task-csv--parse-element c title category)))))))
+
+(defun org-task-csv-row-fmt (plist)
+  "Default row formatting function."
+  (mapconcat #'identity
+             (list (org-clock-csv--escape (plist-get plist ':task))
+                   (if (plist-get plist ':parents) (org-clock-csv--escape (plist-get plist ':parents)))
+                   (if (plist-get plist ':level) (number-to-string (plist-get plist ':level)))
+                   (if (plist-get plist ':priority) (number-to-string (plist-get plist ':priority)))
+                   (plist-get plist ':todo)
+                   (symbol-name (plist-get plist ':status))
+                   (plist-get plist ':scheduled_start)
+                   (plist-get plist ':scheduled_end)
+                   (plist-get plist ':deadline_start)
+                   (plist-get plist ':deadline_end)
+                   (plist-get plist ':closed)
+                   (plist-get plist ':tags))
+             ","))
+
+(defun org-task-csv (&optional infile no-switch use-current)
+  "Export clock entries from INFILE to CSV format.
+When INFILE is a filename or list of filenames, export clock
+entries from these files. Otherwise, use `org-agenda-files'.
+When NO-SWITCH is non-nil, do not call `switch-to-buffer' on the
+rendered CSV output, simply return the buffer.
+USE-CURRENT takes the value of the prefix argument. When non-nil,
+use the current buffer for INFILE.
+See also `org-clock-csv-batch' for a function more appropriate
+for use in batch mode."
+  (interactive "i\ni\nP")
+  (when use-current
+    (unless (equal major-mode 'org-mode)
+      (user-error "Not in an org buffer")))
+  (let* ((infile (if (and use-current buffer-file-name)
+                     (list buffer-file-name)
+                   infile))
+         (filelist (if (null infile) (org-agenda-files)
+                     (if (listp infile) infile (list infile))))
+         (buffer (get-buffer-create "*clock-entries-csv*"))
+         (entries (org-task-csv--get-entries filelist)))
+    (with-current-buffer buffer
+      (goto-char 0)
+      (erase-buffer)
+      (insert org-task-csv-header "\n")
+      (mapc (lambda (entry)
+              (insert (concat (org-task-csv-row-fmt entry) "\n")))
+            entries))
+    (if no-switch buffer
+      (switch-to-buffer buffer))))
+
+(defun org-task-csv-to-file (outfile &optional infile use-current)
+  "Write clock entries from INFILE to OUTFILE in CSV format.
+See `org-clock-csv' for additional details."
+  (interactive "FFile: \ni\nP")
+  (let ((buffer (org-task-csv infile 'no-switch use-current)))
+    (with-current-buffer buffer
+      (write-region nil nil outfile nil nil))
+    (kill-buffer buffer)))
+
+
 (setq filelist '("test.org"))
-(setq entries (org-clock-csv--get-entries1 filelist))
+(setq filelist "test.csv")
+;; (org-task-csv--get-entries filelist)
+(org-task-csv-to-file filelist)
 #+end_src
 
 #+RESULTS:
-| :headline | tasks sample      | :level | 1 | :priority | nil | :tag | nil         | :todo | DOING | :status | todo | :scheduled_start | 2022-11-26          | :scheduled_end | 2022-11-26          | :deadline_start | nil                 | :deadline_end | nil                 | :closed | nil                 |
-| :headline | a normal headline | :level | 1 | :priority | nil | :tag | (work life) | :todo | nil   | :status | nil  | :scheduled_start | nil                 | :scheduled_end | nil                 | :deadline_start | nil                 | :deadline_end | nil                 | :closed | nil                 |
-| :headline | subtask 1         | :level | 2 | :priority |  65 | :tag | nil         | :todo | DONE  | :status | done | :scheduled_start | 2022-11-28 12:00:00 | :scheduled_end | 2022-11-28 12:00:00 | :deadline_start | 2022-12-12 12:00:00 | :deadline_end | 2022-12-12 14:00:00 | :closed | 2022-11-28 18:15:00 |
-| :headline | subtask 2         | :level | 2 | :priority |  66 | :tag | nil         | :todo | TODO  | :status | todo | :scheduled_start | nil                 | :scheduled_end | nil                 | :deadline_start | nil                 | :deadline_end | nil                 | :closed | nil                 |
+: t
 
 ** DONE another sample todo tasks
 CLOSED: [2022-11-25 Fri 00:01]
