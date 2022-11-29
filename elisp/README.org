@@ -144,6 +144,14 @@
                   href=\"../other/mystyle.css\" type=\"text/css\"/>"
         :html-preamble t))
 #+end_src
+** provide and require
+** convention on comments
+- ; - inline comment
+- ;; - single line comment
+- ;;; - outline comments with headings
+* packages
+- s.el
+- dash.el
 * sample code
 ** TODO get information of the headlines
 SCHEDULED: <2022-11-26 Sat>
