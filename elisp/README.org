@@ -152,6 +152,7 @@
 ** build a package
 - ;;;###autoload: magic comment
 - (use-package! package-name :after org)
+- reload package after change of code: delete package folder under `.emacs.d/.local/straight/repos/`
 * packages
 - s.el
 - dash.el
