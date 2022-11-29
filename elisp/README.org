@@ -154,8 +154,10 @@
 - (use-package! package-name :after org)
 - reload package after change of code: delete package folder under `.emacs.d/.local/straight/repos/`
 * packages
+** useful packages
 - s.el
 - dash.el
+** publish packages: TODO
 * sample code
 ** TODO get information of the headlines
 SCHEDULED: <2022-11-26 Sat>
