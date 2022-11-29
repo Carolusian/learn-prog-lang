@@ -149,6 +149,9 @@
 - ; - inline comment
 - ;; - single line comment
 - ;;; - outline comments with headings
+** build a package
+- ;;;###autoload: magic comment
+- (use-package! package-name :after org)
 * packages
 - s.el
 - dash.el
