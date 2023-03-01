@@ -18,6 +18,14 @@
 - Quick handson with less Error handling, e.g. panic, and unwrap, then can refactor
 - Don't over design, it make the handson coding slow and different, because you cater too many things
 
+### Cross Compiling
+
+MacOS cross compile to Windows for example
+
+- `brew install mingw-w64`
+- `rustup target add x86_64-pc-windows-gnu`
+- `cargo build --release --target x86_64-pc-windows-gnu`
+
 ## Book: The Rust Programming Language
 
 NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts about ownership, borrowing and lifetime
