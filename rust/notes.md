@@ -192,3 +192,4 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 - [Sample project: plagiarism checker](https://github.com/frizensami/plagiarism-basic)
 - [Rust: Recommended VSCode Extensions to Setup Your IDE](https://www.becomebetterprogrammer.com/rust-recommended-vscode-extensions/)
   - Rust-analyzer / Better TOML / CodeLLDB / Crates / Error Lens
+- [From and Into](https://rustwiki.org/zh-CN/rust-by-example/conversion/from_into.html)
