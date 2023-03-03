@@ -34,7 +34,7 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 
 - `rustup` and hello world
 - `cargo`: build, check, run
-- `cargo install cargo-edit`, then `cargo add {package_name}`
+- `cargo install cargo-edit`, then `cargo add {package-name}`: hyphen will be replaced into underscores in code
 
 ### Ch3: Common programming concepts
 
@@ -126,7 +126,7 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 - `closures`: able to infer types reliably
 - `move`: to force take ownership
 - `Iterator` trait: `next` method, return Some(Self::Item) or None
-- Type `Item`: associated type to the trait
+- Type `Item`: associated type to the trait, e.g. impl Iterator<Item = &String>
 - consumer methods: consuming adaptors, `sum`, `collect`
 - producer methods: iterator adaptors, lazy, have to call consumer methods
 - iterator is fast, zero cost abstraction
@@ -170,6 +170,30 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 ### Ch20: Final Project - Building a Multithreaded Web Server
 
 - compiler driven development: `cargo check`
+
+## Common packages
+
+- clap and structopt
+- chrono
+- config-file
+- serde
+- log and log4rs
+- tokio
+- bootloader
+- show-image, image and imageproc
+- error-chain
+- reqwest
+- select
+
+## Tips:
+
+### Logging
+
+- [Basic how to log to a file in Rust with log4rs](https://tms-dev-blog.com/log-to-a-file-in-rust-with-log4rs/)
+
+### Sort
+
+- [sort-vec-of-tuples.rs](https://gist.github.com/mehmetsefabalik/2f07df9bcc902d6149a80ad0ccfd5cde)
 
 ## Reference:
 
