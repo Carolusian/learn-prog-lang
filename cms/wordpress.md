@@ -2,7 +2,7 @@
 
 ## Hooks
 
-- register_activation_hook(__FILE__, 'pluginprefix_install')
+- register_activation_hook(**FILE**, 'pluginprefix_install')
 
 ## Tips
 
@@ -54,14 +54,21 @@ define('WP_SITEURL','https://www.domainname.cc/');
 
 ## References
 
-- [WordPress 啟用、停用、刪除外掛](https://ithelp.ithome.com.tw/articles/10234412?sc=iThomeR) 
+- [WordPress 啟用、停用、刪除外掛](https://ithelp.ithome.com.tw/articles/10234412?sc=iThomeR)
 - [Debugging in WordPress](https://wordpress.org/documentation/article/debugging-in-wordpress/#)
 
 ## Plugins
 
-## Books 
+- ACF / WPGlobus / WPML / WP Total Cache / Yoast SEO / The SEO Framework / WP-CFM / WPBakery Page Builder
+- Wordfence / reCaptcha
+- Contact Form 7 / BackWPup
+
+## Themes
+
+- kayo
+
+## Books
 
 - Building Web Apps with WordPress: WordPress as an Application Framework
 - WordPress 4.x Complete
 - Professional WordPress Design and Development, 3rd Edition
-

@@ -195,6 +195,10 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 
 - [sort-vec-of-tuples.rs](https://gist.github.com/mehmetsefabalik/2f07df9bcc902d6149a80ad0ccfd5cde)
 
+### Vec<\_>
+
+- A vector catching all values, normally used with `collect()`
+
 ## Reference:
 
 - [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)

@@ -1,0 +1,55 @@
+* 一二集
+** 添加控制，绑定代码文件为组件
+** 设置默认 editor 为 vscode, install vscode 插件
+** Cc.component start method get component.String.value
+** cc.log web 模式下同 console.log
+* 3集
+** 面向组件编程：依然有类
+** 车里的零件：参考 WinForm, 各种各种的预置组件，Text, Label, etc
+** Cocos 里的精灵也可以安装不同的组件，碰撞组件，音频组件等，二次拼装，大大的简化了开发。
+** 精灵首先是一个 Node, 可以进行 frame 的渲然。
+** 角本也是一个组件
+** 结点是有层级结构的：相对于父结点的坐标，类似于容器的概念
+** This.node.children[0].opacity 设置（记得要挂载角本组件）。可以锁住。
+* 4集：精灵组件的使用
+** 图片精灵，单色精灵，default_sprite
+** Atlas: 多张小图压缩到一起的大图，然后找坐标，宽高再裁剪。减少 IO 次数。工具： texture packer， unity 引擎的 NGUI
+** Type: simple 修改尺寸整体拉伸
+*** 九宮格：边角拉伸时不会变型
+*** 平铺：适合背景图
+*** 填充：类似遮罩，适合做血条
+*** 网格：不知道，不太用
+** Size mode:
+*** Trim: 裁剪空白部分
+*** Raw / custom
+** Blend: 两个或以上的精灵混合效果
+** Materials: 材质，一般不用管
+** cc.resources loader 拿 spriteFrame
+* 5课：角本组件的使用
+** 3.0 以后放弃支持 Js, 只支持 Ts
+** scripts > new JS/TS (recommended to use TS, the JS syntax is very weird)
+** TS follows ES6.0 standard
+** cc._decorator: 注解类型 - 修饰符: @ccclass 识别为一个具体的组件; @property 修饰为属性就右 Cocos Creator 的面板里就可以用了
+** 自带的数据类型，就不用给 @property() 里传递参数，但 cc.Label 或 cc.Button 需要
+** 生命周期函数: Life-Cycle Callbacks (7 methods)
+*** onLoad(): when the component is loaded
+*** start():
+*** onEnable() / onDisable()
+- this.target.active = false
+- this.target.active = true
+*** update(dt) / lateUpdate(dt)
+- update: run when each frame is to be updated, dt is the interval between frames
+- lateUpdate: run after update() is done (less used)
+*** onDestroy()
+** how to invoke Nodes in scripts:
+- this.node: e.g. this.node.x / this.node.y += this.speed * dt
+- this.node.children / this.node.getChildByName("name")
+- cc.find("node1/node2")
+- this.node.getParent()
+- this.node.setParent(node0)
+- this.node.removeAllChildren()
+- this.node.removeChild(node0)
+- this.node.removeFrameParent()
+- this.getComponent(cc.Component)
+- this.getComponentInChildren(cc.Label).string = "hello world"
+* 6课：交互事件
