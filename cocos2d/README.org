@@ -53,3 +53,31 @@
 - this.getComponent(cc.Component)
 - this.getComponentInChildren(cc.Label).string = "hello world"
 * 6课：交互事件
+** ctrl + shift + P can refresh the game application
+** 封装了三种不同的事件：鼠标、键盘、触摸
+** Like JS: addEventListener("mousedown", (event) => {})
+** In Cocos2d:
+- this.node.on(eventType: String, callback: function, target: any, useCapture: boolean)
+- note that a node is not a DOM element, so JS addEventListener does not work directly
+- can either be in start() or onLoad()
+- this.node.on(cc.Node.EventType.MOUSE_DOWN, (event: cc.Event.EventMouse) => { cc.log(event.getLocation()); })
+- event.getLocation() | event.getButton()
+- cc.Event.EventMouse.BUTTON_LEFT
+- this.node.off(cc.Node.EventType.MOUSE_DOWN)
+- this.node.clear(): clear all events in relation to this node
+** Keyboard Events: 全局事件
+- cc.systemEvent.on(eventType, callback)
+- cc.systemEvent.on(cc.SystemEvent.KEY_DOWN, (event: cc.Event.EventKeyboard) => {cc.log(event.keyCode)})
+- cc.macro.KEY.a
+** Touch Events: like MouseEvents, but no buttons
+- event.getID() can get how many fingers used
+- this.node.on(cc.Node.EventType.TOUCH_START, (event: cc.Event.EventTouch) => {})
+- TOUCH_CANCEL
+** 自定义事件
+- cc.find("Player").emit("msg", arg1..arg5);
+- 例如：微信小游戏工具中的通知：子弹打中敌机、要通机敌机：你被打中了，快减血
+** 自定义事件另一种方式：分发事件流
+  - let event = new cc.Event.EventCustom("myEvent", true);
+  - event.setUserData("hello")
+  - event.detail = { date: new Date(), text: "hello"}
+  - cc.find("Player").dispatchEvent(event)
