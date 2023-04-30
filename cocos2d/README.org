@@ -1,6 +1,8 @@
 * 一二集
 ** 添加控制，绑定代码文件为组件
 ** 设置默认 editor 为 vscode, install vscode 插件
+- both browser and scripting editor can be setting in External Program
+- Developer > VS Code Workflow to add tasks: Cmd + P > "task Cocos Compile"
 ** Cc.component start method get component.String.value
 ** cc.log web 模式下同 console.log
 * 3集
@@ -81,3 +83,121 @@
   - event.setUserData("hello")
   - event.detail = { date: new Date(), text: "hello"}
   - cc.find("Player").dispatchEvent(event)
+* Lession 7: collison check
+** spriteA vs spriteB collison detection: add component - box / circle / polygon
+** Editing the edges for the collison: use tag to identify each individual
+** 碰撞检测的使用
+- onCollisionEnter(other: cc.Collider, self: cc.Collider)
+- onCollisionStay(other: cc.Collider, self: cc.Collider)
+- onCollisionExit(other: cc.Collider, self: cc.Collider)
+- cc.director.getCollisionManager().enabled = true // 开启碰撞管理器
+- cc.director.getCollisionManager().enabledDebugDraw = true // 开启碰撞检测范围
+- cc.director.getCollisionManager().enabledDrawBoundingBox = true // 开启碰撞检测边框
+** 字弹飞出屏幕边界判断
+- cc.view.getCanvasSize().height
+** prefab: 预设体
+- @property(cc.Prefab)
+- setInterval(() => { cc.instantiate(this.bulletPrefab); bullet.x = this.node.x; bullet.y = this.node.y + this.node.height / 2; bullet.setParent(cc.director.getScene()); }, 1000)
+- when bullets hit enemy: this.node.removeFromParent(); this.destory();
+* Lession 8: 图片资源和音频资源
+** Cocos Creator 3.0 supports jpg / png / bmp; 2.4 only supports jpg / png
+** 所有要 cc.resources.load 动态加载的都需要放在 resources 文件夹下
+** sample
+- cc.resources.load("images/hero", cc.SpriteFrame, (error: Error, sf: cc.SpriteFrame) => { this.getComponent(cc.Sprite).spriteFrame = sf})
+- this.node.with = 40;
+- this.node.height = 40;
+- SpriteAtlas (图集) 也是一样的用法；
+** 音频资源: mp3, wav, ogg
+- 其他组件 > AudioSource
+- Clip 是音频文件，可以直接从资源管理器中拖过来
+- Volume 是音量，0~1 之间
+- Mute / Loop / Play on Load
+- 可以创建一个单独的节点来负责播放音频
+- play() / stop() / pause() / resume() / isPlaying
+** AudioEngine: 适合控制多个音频的播放
+- cc.resources.load("audio/bgm", cc.AudioClip, (error, clip) => { cc.audioEngine.playMusic(clip, true); })
+- playEffect
+- play
+- cc.resources.loadDir
+* Lession 9: 开发飞机大战
+** Cocos 定时器
+- schedule(callback: function, interval: number, repeat: number, delay: number)
+** Demo
+*** Player:
+- onload: this.screenHeight = cc.view.getCanvasSize().height; this.screenWidth = cc.view.getCanvasSize().width
+- start: this.isSelected = true or false base on he TOUCH_X events
+- start: this.node.setPosition(e.getLocation()) base on TOUCH_MOVE events
+*** Bullets:
+- only need height, no need of width
+- add an property to be speed = 200;
+- update: this.node.y += this.speed * dt;
+- update: if (this.node.y + this.node.height > this.screenHeight) this.node.removeFrameParent(true); this.destory();
+- drag bullet node into resources to make it a prefab
+- die(): need to call this method on Enemy by `other.getComponent(bullet)` in onCollisionEnter()
+*** Player:
+- @property(cc.Prefab) bulletPre = null (this shall be in Player.ts, not Bullet.ts)
+- start: this.shedule(() => { this.shoot() }, shootInterval)
+- shoot(): let bullet = cc.instantiate(this.bulletPre); bullet.x = this.node.x; bullet.y = this.node.y + this.node.height/2; bullet.setParent(cc.director.getScene)
+- audio: cc.resources.load("audio/bullet", cc.AudioClip, (err, clip) => { cc.audioEngine.playEffect(clip, false) })
+- add polygon collider
+*** Enemy:
+- add poygon collider
+- start(): this.node.y = this.screenHeight + this.node.height
+- start(): this.node.x = Math.random() * (this.screenWidth - this.node.width) + this.node.width / 2
+- update(): this.node.y -= this.speed * dt
+- onCollisionEnter(other: cc.Collider): if (other.tag == 9 && !this.isDead) { cc.find("Background").getComponent(Background).score++ }
+  - else if (other.tag == 1 && !this.isDead) { cc.game.pause(); cc.audioEngine.stopAll(); alert("Game Over!"); }
+- die():
+  - cc.resources.load("audio/boom", cc.AudioClip, (err, clip) => {...} )
+  - this.schedule(() => { cc.resources.load(`images/explosion${frameId}`, cc.SpriteFrame (error, sf) => {...})}, 0.1, 19, 0)
+
+*** Background:
+- @property(cc.Prefab) enemyPre
+- start(): this.schedule(() => { let enemy = cc.instantiate(this.enemyPre) }, 1)
+- onload(): cc.director.getCollisionManager().enabled = true;
+* Lession 10: 向量(vector)在游戏中的使用
+** 向量 vs 标量
+** 游戏中的移动速度、加速度，物体的受力，给物体施加的冲量等
+** 子弹斜飞速度
+- Vx = V * cos0; Vy = V & sin0
+** 弧度： 弧长 / 半径
+- let rad = (this.node.angle + 90) * Math.PI / 180
+- this.node.x += this.speed * dt * Math.cos(rad)
+- this.node.y += this.speed * dt * Math.sin(rad)
+** rotate the Axis
+** 空节点用处之一：用来定位，比如子弹发射的位置
+** Node 可以锁定以防止误操作
+** Demo: 坦克大战
+*** Tank
+- onload: this.cannon = this.node.getChildByName("cannon")
+  - this.bulletPre = this.cannon.getChildByName("")
+- start: cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN)
+  - this.node.angle = ??; this.node.y += this.speed;
+  - cannon: this.cannon.angle += 5;
+  - if (this.cannon.angle == 360): this.cannon.angle = 0
+- fire(): cc.resources.load("audio/fire", cc.AudioClip, (err, clip) => { .. })
+  - let bullet = cc.instantiate(this.bulletPre)
+  - bullet.setPosition(this.bulletPos.convertToWorldSpaceAR(cc.Vec2.ZERO))
+  - bullet.angle = this.node.angle + this.cannon.angle
+  - bullet.setParent(cc.director.getScene());
+  - if (!this.reloading)
+  - setTimeout(() => { this.reloading = false })
+- shotgun effect:
+  - let bullets: cc.Node[] = new Array<cc.Node>();
+  - for (let i = 0; i < bullets.length; i++)
+  - bullets[i].angle = this.node.angle + this.cannon.angle + 30 - i * 30
+  - bullets[i].setPosition(this.bulletPos.convertToWorldSpaceAR(cc.Vec2.ZERO))
+* Lession 11-12: UI 组件
+** 控件库 or 创建渲染组件或UI组件
+** RichText: color / size / outline / b / i / u / on (e.g. click) / param / br /img
+** Button: transition
+- Click Events: 一般只有一个事件来处理就可以
+** Layout 组件： 横向、纵向、网格
+** EditBox: 常用在注册用户输入时；如果是微信小游戏，一般是获取信念授权
+** Mask: 遮罩； can be inverted
+** ScrollView: 滚动视图 > content > item - 可以用来作关卡的切换
+** ProgressBar: 例如可以当血槽来用, 作格斗游戏的时候可以来用
+** Slider: e.g. 音量大小
+** Toggle: 单选框、复选框
+** VideoPlayer
+** WebView: 比较少用
