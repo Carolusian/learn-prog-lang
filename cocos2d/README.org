@@ -83,7 +83,7 @@
   - event.setUserData("hello")
   - event.detail = { date: new Date(), text: "hello"}
   - cc.find("Player").dispatchEvent(event)
-* Lession 7: collison check
+* Lesson 7: collison check
 ** spriteA vs spriteB collison detection: add component - box / circle / polygon
 ** Editing the edges for the collison: use tag to identify each individual
 ** 碰撞检测的使用
@@ -99,7 +99,7 @@
 - @property(cc.Prefab)
 - setInterval(() => { cc.instantiate(this.bulletPrefab); bullet.x = this.node.x; bullet.y = this.node.y + this.node.height / 2; bullet.setParent(cc.director.getScene()); }, 1000)
 - when bullets hit enemy: this.node.removeFromParent(); this.destory();
-* Lession 8: 图片资源和音频资源
+* Lesson 8: 图片资源和音频资源
 ** Cocos Creator 3.0 supports jpg / png / bmp; 2.4 only supports jpg / png
 ** 所有要 cc.resources.load 动态加载的都需要放在 resources 文件夹下
 ** sample
@@ -119,7 +119,7 @@
 - playEffect
 - play
 - cc.resources.loadDir
-* Lession 9: 开发飞机大战
+* Lesson 9: 开发飞机大战
 ** Cocos 定时器
 - schedule(callback: function, interval: number, repeat: number, delay: number)
 ** Demo
@@ -155,7 +155,7 @@
 - @property(cc.Prefab) enemyPre
 - start(): this.schedule(() => { let enemy = cc.instantiate(this.enemyPre) }, 1)
 - onload(): cc.director.getCollisionManager().enabled = true;
-* Lession 10: 向量(vector)在游戏中的使用
+* Lesson 10: 向量(vector)在游戏中的使用
 ** 向量 vs 标量
 ** 游戏中的移动速度、加速度，物体的受力，给物体施加的冲量等
 ** 子弹斜飞速度
@@ -187,7 +187,7 @@
   - for (let i = 0; i < bullets.length; i++)
   - bullets[i].angle = this.node.angle + this.cannon.angle + 30 - i * 30
   - bullets[i].setPosition(this.bulletPos.convertToWorldSpaceAR(cc.Vec2.ZERO))
-* Lession 11-12: UI 组件
+* Lesson 11-12: UI 组件
 ** 控件库 or 创建渲染组件或UI组件
 ** RichText: color / size / outline / b / i / u / on (e.g. click) / param / br /img
 ** Button: transition
@@ -201,3 +201,71 @@
 ** Toggle: 单选框、复选框
 ** VideoPlayer
 ** WebView: 比较少用
+* Lesson 13: 场景管理及动态加载
+** 一般的游戏都会包含两个以上的场景（开始、游戏界面）
+** 在 Cocos Creator 里一般用导演类 cc.director 来进行场景管理
+** File > Ctrl + N 可以新建场景
+** 切换:
+*** 直接加载
+- cc.director.loadScene(sceneName: string, onLaunched: function)
+- onLaunched 中可以做一些旧场景的收尾工作，比如保存游戏数据
+- gameStartHandler(): cc.director.loadScene("game", () => { cc.log("新场景已加载") })
+- onDestroy(): 老场景内的组件
+*** 预加载场景
+- cc.director.preLoadScene(sceneName: string, onProgress: function, onLoaded: function)
+- onProgress 参数: completedCount / totalCount / item
+- 真正需要触发切换时: if(this.isNewSceneLoaded) { cc.director.loadScene("newScene") }
+** 常驻节点: 可以用来在不同的场景间传递数据
+- cc.game.addPersistRootNode(node);
+- cc.game.removePersistRootNode(node);
+- 使用方法：可以用一个空节点（DataNode），不渲染任何东西，然后给这个节点挂载 DataStore.ts
+  - onLoad: cc.game.addPersistRootNode(this.node)
+  - ShowScore.ts: start() : cc.find("DataNode").getComponent(DataStore)
+* Lesson 14: 2d 物理引擎 - 刚体
+** 两部分：碰撞 和 Box2D物理引擎 - 分别来模拟物理碰撞和物理特性
+** 物理碰撞 和 普通碰撞是完全独立的，普通碰撞只是比较简单的碰撞捡测
+** 物理碰撞用于摸拟真实的碰撞，例如一个篮球砸中一个空可乐瓶
+** 刚体(Rigid Body)：理想的固体模型，受力后外形不发生形变的物体
+- 选中节点 > 添加组件 > 物理组体 > Rigid Body
+- cc.director.getPhysicsManager().enabled = true; (必须放在 onLoad 函数执行，否则不会生效)
+** 刚体属性
+- Enabled Contact Listener
+- Bullet: 高速物体
+- Type: 动态刚体(默认受到重力和其他外力的影响) / 静态刚体 (地面 / 建筑物) / Kinematic (受重力或其他阻力影响)
+- Allow Sleep
+- Gravity Scale: 重力的倍数的概念
+- Linear Damping: 线性衰减 (例如台球游戏中的摩擦力)
+- Angular Damping: 角速度的衰减
+- Linear Velocity: 线速度
+- Angular Velocity: 角速度
+- Fixed Rotation: 和质心有关
+- Awake On Load: 加载时就收物理系统的影响, 如果关掉的话，就要手动唤醒 (例如: 绳子断了灯往下掉)
+  - this.node.getComponent(cc.RigidBody).awake = true;
+** 刚体可以用代码设置的方法
+- applyForce(cc.v2(1000, 0), cc.v2(0, 0), true); 力是瞬时的，不是持续的；否则就是加速运动了
+- applyForceToCenter
+- applyTorque(): 必须结合碰撞组件来使用
+- applyLinearImpulse(): 线性冲量 - 时间段内，力对物体作用的积累效果，是力对时间的积分
+* Lesson 15: 物理引擎 - 物理碰撞（PhysicsBoxCollider）
+** 物理碰撞一定是和刚体一起使用
+** 物理碰撞组件和普通碰撞组件一样，也可以编辑碰撞边界轮廓
+** 属性
+- Density: 一个轻的物体去撞一个密度大的物体
+- Sensor: 只传感，但不会产生碰撞点，和碰撞效果。（FlappyBird: 飞过缝隙加一分）
+- Friction: 摩擦系数, 两个表面都要设置摩擦系数才有用
+- Restitution: 弹性系数
+** 回调函数: 需要开启接触检测 - rb.enableContactListener = true;
+- onBeginContact(contact, self, other)
+- onEndContact(contact, self, other)
+- onPreSolve(contact, self, other)
+- onPostSolve(contact, self, other)
+- contact: cc.PhysicsContact: 碰撞信息
+- cc.PysicsCollider
+** 碰撞信息
+- colliderA / colliderB
+- disabled
+- disabledOnce
+- getWorldMainfold(): normal(法线向量，碰撞方向)
+- getMainfold()
+- getImpulse()
+- isTouching(): 是否已经接触
