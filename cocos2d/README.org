@@ -269,3 +269,36 @@
 - getMainfold()
 - getImpulse()
 - isTouching(): 是否已经接触
+* Lesson 16: 物理检测
+** 作用是用来查询物体在空间的谋个地方的信息，例如，在某个地方是否存在碰撞体
+** 点检测、矩形检测、射线检测
+*** 点检测: 在小游戏中用的比较少, 一般可以用传感器来替代
+- let physicsCollider = cc.director.getPhysicsManager().testPoint(point);
+- 只能用于测试动态刚体 (Dynamic RigidBody)
+- 如果有多个刚体和这个点覆盖，只会返回一个随机的碰撞体 (其实刚体是不可以 overlap 的)
+*** 矩形测试用法: 例如可以测检范围伤害, 也可以用传感器来替代
+- let rect = cc.rect(x, y, w, h)
+- let physicsColliders = cc.director.getPhysicsManager().testAABB(rect);
+- 可以返回多个碰撞体
+- 也是只能用于测试动态刚体 (Dynamic RigidBody)
+*** 射线检测: 也可以理解为线段测试
+- let results = cc.director.getPhysicsManager().rayCast(p1, p2, type);
+- type:
+  - cc.RayCastType.All - 所有的碰撞体所有的碰撞点的位置 (例如凹形物体)
+  - cc.RayCastType.AllCloset - 所有的碰撞体最近的碰撞点的位置
+  - cc.RayCastType.Any - 离起点越远的先返回
+  - cc.RayCastType.Closet: default - 最近的碰撞点的位置
+- result: collider / point / normal / fraction
+- 什么类型的刚体都可以检测
+- 作用: 可以用来实现游戏中 AI / NPC 的自动寻路功能
+** 自动寻路功能实例
+*** 先用单色结点画几个 Wall, 是 static rigid body
+*** Create bird sprite and Bird.ts: 每 100 毫秒从鸟的位置和它移动的方向来发射一条射线
+- disable gravity
+- start():
+  - let rigidBody = this.getComponent(cc.RigidBody);
+  - rigidBody.linearVelocity = cc.v2(this.direction.x * this.speed, this.direction.y * this.speed)
+  - setInterval(() => { ... }, 100) // 每 100ms 发射一次射线 (每100ms 做一次射线检测)
+    - let results = manager.rayCast(this.node.getPosition(), cc.v2(this.node.x + this.direction.x * 30, this.node.y + this.direction.y * 30), cc.RayCastType.Closet)
+*** 加一个传感器或者作一次矩形检测
+- onEndContact(contact, self, other) { if (other.tag == 10 ) alert("走出来了"); }
