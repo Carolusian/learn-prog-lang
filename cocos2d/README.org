@@ -329,3 +329,53 @@
 - let ani = this.getComponent(cc.Animation)
 - ani.play("GameOver")
 ** cc.tween 兼容 action
+* Lesson 18: 动作系统 (Action System)
+** 与动画系统的区别：动画是提前编辑好的 Clip
+** 动作系统是代码控制：像是演奏乐器，而不是提前录好的 MP3
+** 在游戏中的应用非常广泛
+** 注意 Action 现在被 Tween 替代了
+** Bird Sample
+- start()
+  - let action = cc.moveTo(duration: number, position: number | cc.Vec2, y?: number)
+  - this.node.runAction(action)
+** Other methods:
+- moveBy(): move to relative position
+- rotateTo / rotateBy
+- scaleTo / scaleBy
+- jumpTo: 类似 moveTo, 但不是直线运动
+- jumpBy
+- skewTo / skewBy
+- bezierTo / bezierBy
+- blink
+- fadeTo / fadeIn / fadeOut
+- tintTo / tintBy: change color
+** 瞬发动作： ActionInstant （compare to ActionInterval）
+- show() / hide()
+- toggleVisbility()
+- flipX() / flipY()
+- place()
+- callFunc(): 执行回调函数
+** 动作执行
+- runAction / stopAction / stopAllAction
+- action.setTag
+- stopActionByTag
+- pauseAllActions()
+- resumeAllActions()
+** 容器动作: 可以理解为一序列的动作 或 重复动作
+- let action1 = cc.moveBy(1, 800, 0)
+- let action2 = cc.rotate(1, 360)
+- let seq = cc.sequence([action1, cc.delayTime(1), action2])
+- this.node.runAction(seq)
+- let repeat = cc.repeat(action2, 3) // or repeatForEver
+- this.node.runAction(repeat)
+** 多个动作同时执行 / 并列执行
+- let spawn = cc.spawn(action1, action2)
+- this.node.runAction(spawn)
+** 缓动动作
+- easeIn / easeOut / easeInOut / easeXXXX
+- let action1 = cc.moveBy()
+- action1.easing(cc.easeIn(4));
+- this.node.runAction(action1) // 节点会加速运动
+** Tween 对象: 链式调用
+- cc.tween(this.node).to(4, {x: 800, y:500, angle: 360}, cc.easeXXX()).call(() => {...}).to(...).start()
+- Tween 也可以兼容 action： cc.tween()...then(action).start()
