@@ -302,3 +302,30 @@
     - let results = manager.rayCast(this.node.getPosition(), cc.v2(this.node.x + this.direction.x * 30, this.node.y + this.direction.y * 30), cc.RayCastType.Closet)
 *** 加一个传感器或者作一次矩形检测
 - onEndContact(contact, self, other) { if (other.tag == 10 ) alert("走出来了"); }
+* Lesson 17: 動畫系統
+** 其他组件 > Animation > 填加 Default Clip
+** 动画编辑器 > 新建 Clip 文件 > BirdAni > 打开/关闭编辑模式
+** 关键帧动画 vs 序列帧动画
+- 关键帧：在两个关键帧中间自动补全
+** Sample / Speed
+** 关键帧动画 Steps:
+- Add Property > Right Click > 插入关键帧
+- On another frame update the according property again
+- 也可以清空关键帧
+- Play On Load
+- WrapMode:
+  - normal
+  - loop
+  - pingpong: 正返着来
+- double click the Line between key frames to edit the animation behavior, default is linear
+** 序列帧动画
+- Add Property > cc.Sprite.spriteFrame
+- drag all the frames to the animation panel
+** 帧事件
+- 选定一帧，点“插入帧事件”
+- 指定挂载 script 的回调函数
+** Sample: Game Over
+- start(): this.node.no(cc.Node.EventType.MOUSE_DOWN, () => {})
+- let ani = this.getComponent(cc.Animation)
+- ani.play("GameOver")
+** cc.tween 兼容 action
