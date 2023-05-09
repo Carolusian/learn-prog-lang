@@ -379,3 +379,25 @@
 ** Tween 对象: 链式调用
 - cc.tween(this.node).to(4, {x: 800, y:500, angle: 360}, cc.easeXXX()).call(() => {...}).to(...).start()
 - Tween 也可以兼容 action： cc.tween()...then(action).start()
+* Lesson 19: 粒子系统
+** 也是用组件的形式 > 渲染节点 > 粒子系统
+** Custom 属性
+- duration: -1 表示一直播放
+- Auto Remove on Finish: 自动消毁运行的节点 (onDestroy)
+- Emission Rate: 粒子每秒钟发射的个数
+- Life: 粒子的生存时间
+- Total Particles
+- Position Type: Free / Relative / Grouped
+- Emitter Mode: Gravity / Radius
+** Demo
+- bird > boomParticle (一开始设为不可用)
+- Bird.ts
+- boomParticle: cc.Node
+- this.boomParticle = this.node.children[0]
+- start(): this.node.on(cc.Node.EventType.TOUCH_START, () => { ... })
+- cc.tween(this.node).by(3, { y: 400 }).call(() => { this.boomParicle.actve = true; let ps = this.boomParticle.getComponent(cc.ParticleSystem); ps.resetSystem(); }).start()
+** 粒子系统不太推荐，因为计算量大
+
+* References:
+- https://gamemath.com/
+- https://github.com/PacktPublishing/Mathematics-for-Game-Programming-and-Computer-Graphics
