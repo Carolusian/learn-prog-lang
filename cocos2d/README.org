@@ -397,6 +397,14 @@
 - start(): this.node.on(cc.Node.EventType.TOUCH_START, () => { ... })
 - cc.tween(this.node).by(3, { y: 400 }).call(() => { this.boomParicle.actve = true; let ps = this.boomParticle.getComponent(cc.ParticleSystem); ps.resetSystem(); }).start()
 ** 粒子系统不太推荐，因为计算量大
+* Lesson 20: 数据本地存储
+** 例如单机游戏里，可以方便下次打开游戏时还可以读取这些数据
+** 通过 Javascript 的 localStorage 对象 (页游)
+- cc.sys.localStorage
+- setItem / getItem / removeItem
+** 微信小游戏是用 wx.setStorage / getStorage
+** JSON 数据的应用
+- let pData = Object.assign(new PlayData(), JSON.parse(jsonStr))
 
 * References:
 - https://gamemath.com/
