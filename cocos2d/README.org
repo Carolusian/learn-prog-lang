@@ -405,6 +405,33 @@
 ** 微信小游戏是用 wx.setStorage / getStorage
 ** JSON 数据的应用
 - let pData = Object.assign(new PlayData(), JSON.parse(jsonStr))
+* Lesson 21: Web服务器
+** 略
+* Lesson 22: Socket概念(套接字)
+** 应用进程之间进行双向通信端点的抽象, 提供了应用层进程利用网络交换数据的机制
+** 上联应用进程、下联网络协议
+** Http 适用场景
+- 资源加载、退出游戏时保存数据上传
+- 不太适合和服务器交换一些不太需要实时更新的数据
+** Socket
+- 两个网络端点之间建立一个长效的通信通道, 在一直可用的情况下更适合实时数据的交换
+- 表示方法 - IP地址:端口号
+** Socket 工作流程: client socket / server socket
+- 服务器启动监听
+- 客户端请求连接
+- 服务端确认连接
+** Socket在游戏中的应用
+- 局域网对战游戏: 红警、星际争霸、CS
+  - 有一个玩家会充光服务端（一般是房主）
+  - 房主会用 UDP 向局域网内所有的机器广播开了一个房音
+- 网络在线对战平台: 盛大、浩方
+  - 本质上还是局域网实现，只不过利用了虚拟 IP 技术
+- 网络游戏
+  - 不需要玩家来充当服务器
+  - 网络游戏公司会单独提供服务器来运行 Server Socket 的代码
+  - 不需要运行游戏的代码逻辑，只专注于收发数据与转发数据
+* Other ticks
+- [[https://docs.cocos.com/creator/manual/zh/scripting/access-node-component.html][访问节点和组件]]
 
 * References:
 - https://gamemath.com/
