@@ -432,6 +432,7 @@
   - 不需要运行游戏的代码逻辑，只专注于收发数据与转发数据
 * Other ticks
 - [[https://docs.cocos.com/creator/manual/zh/scripting/access-node-component.html][访问节点和组件]]
+- [[https://docs.cocos.com/creator/manual/zh/ui-system/components/engine/list-with-data.html][制作动态生成内容的列表]]
 
 * References:
 - https://gamemath.com/
