@@ -10,4 +10,20 @@
 - Item 4: Structural Typing (duck typed)
   - have property beyond explicitly listed
   - facilitate unit testing
-  - classes also follow structural typing rules
+  - classes also follow structural typing rules; the same for `enum`
+- Item 4: Limited user of the any type
+  - `(as any)` is a type assertion
+- Item 6: Editor and Language Services
+  - autocomplete, inspection, navigation, and refactoring
+- Item 7: Type as a set of values
+  - this is the domain of the type
+  - Itersection of types: 
+    - `keyof (A&B) = (keyof A) | (keyof B)`
+    - `keyof (A|B) = (keyof A) & (keyof B)`
+  - `extends` as a constraint in a generic
+    - `function sortBy<k extends keyof T, T>(vals: T[], key: K): T[] {...}`
+  - `never`: empty set; `unknow`: universal set
+  - `extends` means `assignable to`, `subtype of`, `subset of`
+- Item 8: Type Space vs Value Space
+  - many constructs have different means in two spaces (p.38)
+- Item 9: prefer Type Declarations to Type Assertions
