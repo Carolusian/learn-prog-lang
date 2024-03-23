@@ -17,6 +17,8 @@
 ### Item 4: Limited user of the any type
   - `(as any)` is a type assertion
 
+## Ch02: TypeScript's Type System
+
 ### Item 6: Editor and Language Services
   - autocomplete, inspection, navigation, and refactoring
 
@@ -145,6 +147,8 @@ const REQUIRES_UPDATE: {[k in typeof ScatterProps]: boolean} = {
 }
 ```
 
+## Ch03: Type Inference
+
 ### Item 19: Avoid Cluttering Your Code with Inferable Types
 
 - Ideal code includes type annotations for function/method signatures but not for the local variables
@@ -209,3 +213,66 @@ const getNumber = async () => 42;
 // is equivalent to 
 const getNumber = () => Promise.resolve(42);
 ```
+
+### Item 26: Understand How Context Is Used in Type Inference
+
+### Item 27: Use Functional Constructs and Libraries to Help Types Flow
+
+- Lodash type alias. Dictionary<string> is the same as `{[key:string]: string}` or `Record<string, string>`
+- `flat` method has signature like `T[][] => T[]`
+- `_` wraps and `.value()` does the unwrap
+
+```
+const bestPaid = _(allPlayers)
+  .groupBy(player => player.team)
+  .mapValues(players => _.mapBy(players, p => p.salary)!)
+  .values()
+  .sortBy(p => -p.salary)
+  .value()
+```
+
+## Ch04: Type Design
+
+Show me your tables, and I won't usually need your flowcharts; they will be obvious --Fred Brooks, The Mythical Man Month
+
+### Item 28: Prefer Types That Always Represent Valid States
+
+tagged union trick
+
+```
+interface State {
+  pageText: string;
+  isLoading: boolean;
+  error?: string
+}
+```
+
+vs
+
+```
+interface RequestPending {
+  state: 'pending';
+}
+
+interface RequestError {
+  state: 'error';
+  error: string;
+}
+
+interface RequestSuccess {
+  state: 'ok';
+  pageText: string;
+}
+type RequestState = RequestPending | RequestError | RequestSuccess;
+interafce State {
+  currentPage: string;
+  requests: {[page:string]: RequestState};
+}
+```
+
+Airbus 330 case
+
+### Be Liberal in What You Accept and Strict in What You Produce
+
+- TCP implementation
+- contract for functions: broad in what to accept, more specific in output
