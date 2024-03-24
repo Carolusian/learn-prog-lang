@@ -272,7 +272,47 @@ interafce State {
 
 Airbus 330 case
 
-### Be Liberal in What You Accept and Strict in What You Produce
+### Item 29: Be Liberal in What You Accept and Strict in What You Produce
 
 - TCP implementation
 - contract for functions: broad in what to accept, more specific in output
+- `Omit` and `Partial`: see all utility types here: https://www.typescriptlang.org/docs/handbook/utility-types.html
+
+### Item 30: Don't Report Type Information in Documentation
+
+- `timeMs` and `temperatureC` is much cleaner 
+
+### Item 31: Push Null Values to the Perimeter of Your Types
+
+- Values are easier to work with when they're either completely null or null-null
+- Turning on `strictNullChecks`
+
+### Item 32: Prefer Unions of Interfaces to Interfaces of Unions
+
+bad design: lead to mixed Layout and Paint
+
+```
+interface Layer {
+  layout: FillLayout | LineLayout | PointLayout;
+  paint: FillPaint | LinePaint | PointPaint;
+}
+```
+
+- add "tag" to union, it is a good idea
+- unions of interfaces are more precise
+
+### Item 33: Prefer more Precise Alternatives to String Types
+
+```
+type RecordingType = 'studio' | 'live';
+interface Album {
+  artist: string;
+  title: string;
+  releaseDate: Date;
+  recordingType: RecordingType;
+}
+```
+
+- use `keyof T`
+
+### Item 34: Prefer Incomplete Types to Inaccurate Types
