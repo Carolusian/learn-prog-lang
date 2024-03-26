@@ -316,3 +316,13 @@ interface Album {
 - use `keyof T`
 
 ### Item 34: Prefer Incomplete Types to Inaccurate Types
+
+- avoid uncanny valley of type safety
+- acknowledge the gaps using any or unknown.
+
+### Item 35: Generate Types from APIs and Specs, Not Data
+
+- GraphQL types are nullable, ! after the type indicates not be null 
+- many tools help go from GraphQL query to TypeScript types: `apollo client:codegen  --target typescript`
+- single source of truth: the GraphQL schema
+- If no spec or official schema, then have to generate from data: `quicktype`
