@@ -326,3 +326,26 @@ interface Album {
 - many tools help go from GraphQL query to TypeScript types: `apollo client:codegen  --target typescript`
 - single source of truth: the GraphQL schema
 - If no spec or official schema, then have to generate from data: `quicktype`
+
+### Item 36: Name Types Using the Language of Your Problem Domain
+
+- Phil Karlton: two hard problems: cache invalidation and naming things
+- try to reuse domain specialized vocabulary from the problem domain
+
+### Item 37: Consider "Brands" for Nominal Typing
+
+```
+interface Vector2D {
+  _brand: '2d';
+  x: number;
+  y: number;
+}
+
+function vec2D(x: number, y:number): Vector2D {
+  return {x, y, _brand: '2d'}
+}
+```
+
+- This makes it mathmatically correct
+- See the AbsolutePath type guard example: `function isAbsolutePath(path: string): path is AbsolutePath`
+- See the SortedList type guard example
