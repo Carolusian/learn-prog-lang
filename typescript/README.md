@@ -29,7 +29,7 @@
     - `keyof (A|B) = (keyof A) & (keyof B)`
   - `extends` as a constraint in a generic
     - `function sortBy<k extends keyof T, T>(vals: T[], key: K): T[] {...}`
-  - `never`: empty set; `unknow`: universal set
+  - `never`: empty set; `unknown`: universal set
   - `extends` means `assignable to`, `subtype of`, `subset of`
 ### Item 8: Type Space vs Value Space
   - many constructs have different means in two spaces (p.38)
@@ -349,3 +349,132 @@ function vec2D(x: number, y:number): Vector2D {
 - This makes it mathmatically correct
 - See the AbsolutePath type guard example: `function isAbsolutePath(path: string): path is AbsolutePath`
 - See the SortedList type guard example
+
+## Ch05 Working with any
+
+### Item 38: Use the narrowest possible scope for any
+
+```
+// bad: any return type is "contagious"
+function f1() {
+  const x:any = expressionFoo();
+  processBar(x);
+  return x;
+}
+
+// good: scoped to a single expression
+function f2() {
+  const x = expressionFoo();
+  processBar(x as any);
+  return x:
+}
+
+// bad
+const config: Config = {
+  a: 1,
+  b: 2,
+  c: {
+    key: value
+  }
+} as any
+
+// good
+const config: Config = {
+  a: 1,
+  b: 2,
+  c: {
+    key: value as any
+  }
+} 
+```
+
+- can use `@ts-ignore` as well
+
+### Item 39: Prefer More Precise Variants of any
+
+- `any[]`
+- `{[key: string]: any}`
+- `type Fn0 = () => any;`
+- `type Fn1 = (arg: any) => any;`
+- `type FnN = (...args: any[]) => args.length;`
+
+### Item 40: Hide Unsafe Type Assertions in Well-Typed Functions
+
+```
+function cacheLast<T extends Function>(fn: T): T {
+  let lastArgs: anyp[] | null = null;
+  let lastResult: any;
+
+  return function(...args: any[]) {
+    if (!lastArgs || !shallowEqual(lastArgs, args)) {
+      lastResult = fn(...args);
+      lastArgs = args;
+    }
+    return lastResult;
+  } as unknown as T;
+}
+```
+
+- `doubel assertion`: https://basarat.gitbook.io/typescript/type-system/type-assertion#double-assertion
+- use `unknown` as a bridge to create a subtype relation
+- harmless type assertion: `if(!(k in b) || aVal !== (b as any)[k])`
+- this is much preferable to scattering iteration and assertions to check for object equality throughout your code
+
+### Item 41: Understand Evolving any
+
+```
+const result = [];
+result.push('a');
+result // type is string[]
+result.push(1);
+result // type is (string | number)[]
+```
+
+- implicit `any` and `any[]` types are allowed to evolve
+
+### Item 42: Use `unknown` Instead of `any` for Values with an Unknown Type
+
+- `any` doesn't fit "thinking of types as sets of values": both a subset and superset of all other sets
+- `unknown`: any type is assignable to `unknown`; unknown is only assignable to unknown, not other types
+- `never`: on the opposite
+
+```
+const book = safeParseYAML(`
+  name: Villette
+  author: Charlotte Bronte
+`) as Book;
+```
+
+- `unknown` is not assignable to other types, a type assertion is explicitly required (better than any).
+- `unknown`: unknown is appropriate whenever you know that there will be a value but you don't know its type
+- `object` and `{}` can be used in a similar way to `unknown`
+- `unknown` is a type-safe alternative to any, use `unknown` to force your users to use a type assertion or do type checking
+
+### Item 43: Prefer Type-Safe Approaches to Monkey Patching
+
+- `augmentation`: special ability of interface (you can't hide it from other parts of your code or from libraries)
+
+```
+// in a module context, you'll need to add a declare global to make this work
+
+export {};
+declare global {
+  interface Document {
+    monkey: string
+  }
+}
+```
+
+- `type assertion`
+
+```
+interface MonkeyDocument extends Document {
+  monkey: string
+}
+
+(document as MonkeyDocument).monkey = 'Macaque'
+```
+
+### Item 44: Track Your Type Coverage to Prevent Regressions in Type Safety
+
+- `npx type-coverage`: keep track of how well-typed your program is.
