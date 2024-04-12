@@ -561,3 +561,31 @@ assertType<number[]>(map(['john', 'pual'], name => name.length))
 ```
 
 - `dtslint`
+
+## Ch07 Writing and Running Your Code
+
+### Item 53: Prefer ECMAScript Features to TypeScript Features
+
+- alternatives to Enums: `type Flavor = 'vanilla' | 'chocolate' | 'strawberry'`
+- has advantage of translating more directly to JavaScript
+- Try to avoid hiding the design of your class by using a mix of parameter and non-parameter properties (inconsistence)
+- Decorators
+
+### Item 54: Know How to Iterate Over Objects
+
+- `for (k in keyof ABC)`
+- `for (const [k, v] of Object.entries(abc))`
+
+### Item 55: Understand the DOM hierarchy
+
+- normally you can ignore when writing JavaScript, but need to Undertand in TypeScript
+- differences between `Node`, `Element`, `HTMLElement`, and `EventTarget`; `Event` and `MouseEvent`
+- Use specific enough type for DOM, or give TypeScript context to infer
+
+### Item 56: Don't Reply on Private to Hide Information
+
+### Item 57: Use Source Maps to Debug Typescript
+
+- sourceMap option in tsconfig.json
+
+## Ch08 Migrating to TypeScript
