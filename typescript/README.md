@@ -478,3 +478,86 @@ interface MonkeyDocument extends Document {
 ### Item 44: Track Your Type Coverage to Prevent Regressions in Type Safety
 
 - `npx type-coverage`: keep track of how well-typed your program is.
+
+## Ch06 Types Declaration and `@types`
+
+### Item 45: Put TypeScript and @types in devDependencies
+
+- DefinitelyTyped
+
+### Item 46: Understand the Three Versions Involved in Type Declarations 
+
+- version of package
+- version of its type declarations (@types)
+- version ot TypeScript
+- Major and minor versions match but that patch versions do not.
+- Official recommendation: bundle type declarations only if the library is written in TypeScript
+
+### Item 47: Export All Types that Appear in Public APIs 
+
+- for exported types, can use `Parameters` and `ReturnType` generic types
+
+```
+type MySanta = ReturnType<typeof getGift>;
+type MyName = Parameters<typeof getGift>[0];
+```
+
+### Item 48: Use TSDoc for API Comments
+
+- `@param` and `@returns`
+
+### Item 49: Provide a Type for this in Callbacks
+
+- there is no reason `this` had to be bound to an instance
+- it could be bound to anything
+- replace `onClick` with an arrow function 
+- Don't forget about `this`, it is a part of your API, and you should include it in your type declarations
+
+```
+function addKeyListener(
+  el: HTMLElement,
+  fn: (this: HTMLElement, e: KeyboardEvent) => void
+) {
+  el.addEventListener('keydown', e => {
+    fn.call(el, e);
+  });
+}
+```
+
+### Item 50: Prefer Conditional Types to Overloaded Declarations
+
+The problem:
+
+```
+function double(x: number|string): number|string;
+
+// the return type is imprecise
+double(12) // string | number
+double('x') // string |number
+
+// better way
+function double<T extends number|string>(x:T): T extends string? string: number
+```
+
+- Conditional types are like if statements in type space
+
+### Item 51: Mirror Types to Sever Dependencies
+
+```
+// leverage structural typing
+// just mirror the methods you need
+
+interface CsvBuffer {
+  toString(encoding?: string): string
+}
+```
+
+### Item 52: Be Aware of the Pitfall of Testing Types
+
+```
+function asserType<T>(x: T) {}
+
+assertType<number[]>(map(['john', 'pual'], name => name.length))
+```
+
+- `dtslint`
