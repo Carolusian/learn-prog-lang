@@ -589,3 +589,29 @@ assertType<number[]>(map(['john', 'pual'], name => name.length))
 - sourceMap option in tsconfig.json
 
 ## Ch08 Migrating to TypeScript
+
+### Item 58: Write Modern JavaScript 
+
+- use Classes Instead of Prototypes
+- use let/const (block scoped) instead of var 
+- use for-of loop; use `array.forEach`
+- prefer arrow functions to make `this` less confused
+- use Compact Object Literals and Destructing Assignment
+- shorthand for properties whose values are functions
+- specify default values when destructuring: `const {a = 'defualt'} = obj.props`
+- use default parameters
+- use async/await instead of Raw Promises or Callbacks
+- use Map and Set instead of objects for Associative Arrays
+
+### Item 59: Use @ts-check and JSDoc to experiment with TypeScript
+
+### Item 60: Use allowJs to Mix TypeScript and JavaScript
+
+### Item 61: Convert Module by Module Up Your Dependency Graph
+
+- starting with leaves
+- `madge` tool
+- As you migrate your code, focus on adding types rather than refactoring
+- make a list of future refactors
+
+### Item 62: Don't Consider Migration Complete Until You Enable `noImplicitAny`
