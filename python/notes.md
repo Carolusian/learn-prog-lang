@@ -542,3 +542,7 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 
 - [PyQt Layouts: Create Professional-Looking GUI Applications](https://realpython.com/python-pyqt-layout/)
 - [QML Extension for Visual Studio Code: Develop Qt Quick Apps with VS Code and Felgo Live](https://blog.felgo.com/develop-qt-quick-apps-with-visual-studio-code-qml-extension)
+
+## Packages
+
+- uv: package management written in Rust
