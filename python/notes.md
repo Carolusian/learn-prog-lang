@@ -546,6 +546,7 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 ## Packages
 
 - uv: package management written in Rust
+- tenacity: retrying decorators
 
 ## Source Code to read
 
