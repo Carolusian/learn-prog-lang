@@ -225,4 +225,5 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
   - Rust-analyzer / Better TOML / CodeLLDB / Crates / Error Lens
 - [From and Into](https://rustwiki.org/zh-CN/rust-by-example/conversion/from_into.html)
 - [Rust 的所有权可视化](https://cel.cs.brown.edu/aquascope/)
+- [Rust算法教程 The Algos (algorithms)](https://algo.course.rs/)
 - exercism: get really good at programming
