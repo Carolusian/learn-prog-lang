@@ -204,6 +204,7 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 
 - [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
 - [Idiomatic Rust](https://github.com/mre/idiomatic-rust)
+- [Rust Ownership, Move and Borrow - Part 1](https://www.openmymind.net/Rust-Ownership-Move-and-Borrow-part-1/)
 - [Reading Rust Function Signatures](https://github.com/brson/rust-anthology/blob/master/src/reading-rust-function-signatures.md)
 - [Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/intro.html)
 - [Async Programming in Rust](https://rust-lang.github.io/async-book/01_getting_started/01_chapter.html)
