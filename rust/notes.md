@@ -49,6 +49,7 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 - stack vs heap
 - `*` is the dereferencing operator
 - `&` create a reference which does not own the borrowed value
+  - the use of `&` in params shall be consistent, ie. if defined as `&`, shall be passed as `&` when invoke 
 - `&` is normally used before type or lifetime type during declaration
 - `&mut var`: exclusive borrowing, only one mutable reference is allowed at the same time
 - `&var`: shared borrowing, multiple borrowers are allowed
