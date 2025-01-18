@@ -186,6 +186,17 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 - reqwest
 - select
 
+## VSCode extensions
+
+- `rust-analyzer` for language support
+- `crates` that show version information when adding dependencies to your Cargo.toml
+- `Even Better TOML` for toml syntax and support
+- `CodeLLDB` for debugging
+- `Error Lens` actually cracked for Rust development. It shows error and warning messages inlined with your code. Since getting errors is so common in Rust, getting quick feedback like this and being able to fix it is great!
+- `Docs View` adds a panel that shows documentation for whatever expression your cursor is at. I've been using for a couple of weeks and love it so far. It shows not only docs, but also type definitions and where the item comes from.
+
+
+
 ## Tips:
 
 ### Logging
