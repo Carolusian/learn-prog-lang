@@ -211,6 +211,10 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 
 - A vector catching all values, normally used with `collect()`
 
+### Learn from package example
+
+- Normally, the package repo will has examples, e.g. https://github.com/tokio-rs/axum/tree/main/examples
+
 ## Reference:
 
 - [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
