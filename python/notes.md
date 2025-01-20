@@ -1,4 +1,6 @@
-## Ch01: Python Data Model
+## Fluent Python (Luciano Ramalho)
+
+### Ch01: Python Data Model
 
 - Dunder methods \_\_\*\_\_
   - Pros?
@@ -9,7 +11,7 @@
   - Object Model: Metaobject protocal - API for core language construct (extending a language to support new paradigms)
 - Simple class with collections.namedtuple
 
-## Ch02: Data Structure - sequence
+### Ch02: Data Structure - sequence
 
 - Container / Sequence / MutableSequence
 - Forloop vs List comprehension
@@ -43,7 +45,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
   - `array` for `floats`
   - `deque` for FIFO and LIFO
 
-## Ch03: Data Structure - dictionaries and sets (hashtables)
+### Ch03: Data Structure - dictionaries and sets (hashtables)
 
 - `__builtins__.__dict__`
 - `hashable`: value never change during its lifetime
@@ -60,7 +62,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
   - ordering depends on insertion
   - adding elements may change the order of other elements
 
-## Ch04: Text vs bytes
+### Ch04: Text vs bytes
 
 - literal: 字面常量 / code point: 码位 (the representation that can be understand by humans)
 - code point > encoded using, e.g., UTF8, UTF16 > different bytes (the representation of the data in computer) depends on the selected encoding
@@ -72,14 +74,14 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - The unicode sandwich
 - local.getpreferedencoding
 
-## Ch05: First-class functions
+### Ch05: First-class functions
 
 - first-class function means: functions as first-class objects: assigned to variable/ element in data structure; pass as argument; return in the function
 - higher-order function: take function as argument or return function
 - callable objects: `__call__`
 - to specify keyword only argument with `*`: `def f(a, \*, b)`
 
-## Ch06: Design pattern with first-class functions
+### Ch06: Design pattern with first-class functions
 
 - Strategy pattern: order discount strategies: Order as context, Abstract and Contrete strategies
 - `abc` for abstract class and methods
@@ -91,7 +93,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - If generic sound name like `execute`, `run`, `doIt`. Then consider using first-class functions
 - Other books introducing patterns
 
-## Ch07: Function decorators and closures
+### Ch07: Function decorators and closures
 
 - metaprogramming - changing program behavior at runtime
 - decorator runs when the it is imported: import time
@@ -108,7 +110,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - `**locals()`: allows any local variables to be passed as keyword arguments
 - decorators are best coded as classes implementing `__call__`
 
-## Ch08: Object references, mutability and recycling
+### Ch08: Object references, mutability and recycling
 
 - Python object is a label rather than a box
 - The only mode of parameters passing in Python is `call by sharing`
@@ -125,7 +127,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - `weak references`: `list` and `dict` instances may not be referents
 - `interning`: a technic for optimization by sharing literals or small integers
 
-## Ch09: A Pythonic object
+### Ch09: A Pythonic object
 
 - `repr`, `str`, `format` must always return unicode strings, only `__bytes__` supposed to return a bytes sequence
 - `__iter__` makes a object iterable, and also makes `unpacking` work
@@ -141,7 +143,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - using `type`, make the methods safer to be inherited
 - `__index__` to use a object as slice
 
-## Ch10: Sequence hacking, hashing and slicing
+### Ch10: Sequence hacking, hashing and slicing
 
 - This chapter is mainly about `duck typing`: duck typing serves the purpose of protocal without inherit anything
 - `duck typing` is actually providing informal protocol
@@ -158,7 +160,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - `xxx-like` object, e.g. file-like object, can be a vivid explanation of `duck typing`
 - If you wnat the sum of list of items, you should write in a way that looks like "the sum of a list of items", not in a way that looks like "loop over these items, maintain another variable t, perform a sequence of additions"
 
-## Ch11: Interfaces: from protocol to ABCs
+### Ch11: Interfaces: from protocol to ABCs
 
 - This chapters compares: `duck typing` and formal interfaces `Abstract Base Classes (ABC)`
 - `ABC`, like descriptors and metaclasses, is mainly for building frameworks
@@ -181,7 +183,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 - A metaphor fosters understanding by making constraints clear
 - However, strict adherence to metaphors ties interfaces unnecessarily tightly to the workings of the physical world
 
-## Ch12: Inheritance: for good or for worse
+### Ch12: Inheritance: for good or for worse
 
 - Subclassing built-in types: you shall not overrides built-in methods, subscribe `UserDict`, `UserList` and `UserString` instead
 - Multiple inheritance and method resolution: read from right to left, tips: see `__mro__`
@@ -197,7 +199,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
   - Favor object composition over class inheritance
 - Django class based generic views: View and TemplateResponseMixin
 
-## Ch13: Operator overloading: doing it right
+### Ch13: Operator overloading: doing it right
 
 - Java left out operator overloading because too many people abuse it
 - Good balance in python: cannot overload operators for built-in types; only able to overload existing operators
@@ -222,7 +224,7 @@ def grade(score, breakpoints=[], grades='FDCBA'):
 BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).subtract(BigDecimal.ONE));
 ```
 
-## Ch14: Iterables, iterators and generators
+### Ch14: Iterables, iterators and generators
 
 - `yield` keyword allows the construction of generators. Generators (implement iterator interface) are iterators
 - generators can produce items "out of thin air", while iterators retrieve items from a collection
@@ -255,7 +257,7 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
   - coroutines are consumers of data
   - coroutines are not related to iteration
 
-## Ch15: Context managers and `else` blocks
+### Ch15: Context managers and `else` blocks
 
 - `for/else` / `while/else`: only run when the loop runs to completion, not when aborted with a break.
 - `try/else`: will only run if no exception is raised in the try block. dangerous_call -> exception -> after_call()
@@ -274,7 +276,7 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 - making transactional changes to a `list` object, which makes a copy in the with block.
 - Analogy of context manager as sandwich
 
-## Ch16: Coroutines
+### Ch16: Coroutines
 
 - A line `yield item` produces a value that is received by the caller of `next(..)`.
 - In a coroutine, `yield` usually appears on the right side of an expression.
@@ -304,7 +306,7 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 - popular recipes tagged coroutine in ActiveState Code recpies database
 - Effective Python: consider coroutines to Run many functions concurrently
 
-## Ch17: Concurrency with futures
+### Ch17: Concurrency with futures
 
 - review the patterns in download flag examples
 - 99% use case: the simple pattern of spawning a bunch of independent threads and collect the result in a queue
@@ -338,7 +340,7 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 - GIL simpifies the implementation of the CPython interpreter and of extension written in C, so that we have vast number of extensions
 - JavaScript interpreters don't support user-level threads at all.
 
-## Ch18: Concurrency with asyncio
+### Ch18: Concurrency with asyncio
 
 - Concurrency is about dealing with a lots of things at once; Parallelism is about doing lots of things at once; (Rob Pike, co-inventor of Golang)
 - trick for text mode animation: move the cursor back with backspace `\x08`: write('\x08' + len(status))
@@ -396,7 +398,7 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 - Both python and nodejs have no transparent way to leverage all available CPU cores
 - One Loop: one loop to rule them all, one loop to find them; one loop to bring them all and in liveness bind them
 
-## Ch19: Dynamic attributes and properties
+### Ch19: Dynamic attributes and properties
 
 - `__new__` vs `__init__`: see also: https://www.youtube.com/watch?v=-zsV0_QrfTw
   - `__new__` use case: return a different object, all alter arguments before creating the object
@@ -419,7 +421,7 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 - handle attribute deletion: `@member.deleter`, `fdel`, `__delattr__`
 - special attributes and functions for attribute handling: `__class__`, `__dict__`, `dir`, `getattr`, `hasattr`, `setattr`, `vars`
 
-## Ch20: Attribute descriptors
+### Ch20: Attribute descriptors
 
 - A way to reuse the same access logic for multiple attributes
 - A class that provides instances which are deployed as attributes for the managed class
@@ -464,7 +466,7 @@ BigDecimal interest = principal.multiply(BigDecimal.ONE.add(rate).pow(periods).s
 - Docstring of a descriptor can be used for documentation: `help(LineItem.weight)`, `help(LineItem)`
 - Worse is better: Richard Gabriel: the requirement to explicitly declare self as the first argument of methods
 
-## Ch21: Class metaprogramming
+### Ch21: Class metaprogramming
 
 - the art of creating or customizing classes **at runtime**
 - class decorators solve many of the sample problems that can be done by using metaclasses: **customizing a class the moment it's created**
