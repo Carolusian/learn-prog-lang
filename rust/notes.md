@@ -139,7 +139,7 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 
 ### Ch15: Smart Pointer
 
-- `Box::new(5)`: store data on head rather than stack without performance overhead
+- `Box::new(5)`: store data on heap rather than stack without performance overhead
   - unknow size during compilation
   - transfer ownership of large data without copying
   - want to own value of a particular trait rather than type
