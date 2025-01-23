@@ -1,4 +1,4 @@
-# Rust Notes
+![image](https://github.com/user-attachments/assets/80e9e459-6635-44ce-a402-dbfb4b88e6a9)# Rust Notes
 
 ## Key concepts
 
@@ -121,6 +121,7 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 - trait restriction: can only implement a trait on a type only if the trait or the type is local to our crate
 - trait bounds
 - `blanket implementation`
+- lifetime function signature: `fn longest<'a>(x: &'a str, y: &'a str) -> &'a str` (so the compiler know that lifetime of `x` and `y` will be the same)
 
 ### Ch13: Iterators and Closures
 
