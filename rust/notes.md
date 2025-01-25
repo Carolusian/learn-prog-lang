@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/80e9e459-6635-44ce-a402-dbfb4b88e6a9)# Rust Notes
+# Rust Notes
 
 ## Key concepts
 
