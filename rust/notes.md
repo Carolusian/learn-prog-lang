@@ -113,6 +113,7 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 - propagating: return `Result<T, E>`
 - shorthand for propagating: `?` operator, can chain method calls, and returns Result.
 - Dynamic Err dispatch: Result((), Box<dyn Error>)
+- leverage `map_err`, `map_or`, `map_or_else`: study refactored code of `llmflare`
 
 ### Ch10: Generic, Traits, and Lifetimes
 
