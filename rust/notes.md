@@ -184,7 +184,7 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 - tokio
 - bootloader
 - show-image, image and imageproc
-- error-chain
+- thiserror, anyhow, error-chain
 - reqwest
 - select
 
@@ -219,6 +219,8 @@ NOTE: can learn just chapter 1-11 for the basics, chapter 4 & 10 is new concepts
 
 ## Reference:
 
+- [Good | A Simpler Way to See Results](https://www.youtube.com/watch?v=s5S2Ed5T-dc&t=10s)
+- [Good | Choose the Right Option](https://www.youtube.com/watch?v=6c7pZYP_iIE&t=940s)
 - [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
 - [Idiomatic Rust](https://github.com/mre/idiomatic-rust)
 - [Rust Ownership, Move and Borrow - Part 1](https://www.openmymind.net/Rust-Ownership-Move-and-Borrow-part-1/)
